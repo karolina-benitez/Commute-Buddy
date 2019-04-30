@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import NavBar from '../components/NavBar'
 import NotificationsButton from '../components/NotificationsButton'
 import { Button, Form, Col } from 'react-bootstrap';
 

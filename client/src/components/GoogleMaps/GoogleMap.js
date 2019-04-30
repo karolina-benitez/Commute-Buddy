@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from '../../Map';
 
+const API_KEY = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
 console.log(process.env.TOKEN);
-
-const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
 export class MapContainer extends Component {
   state = {
@@ -18,7 +17,6 @@ export class MapContainer extends Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
-
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
