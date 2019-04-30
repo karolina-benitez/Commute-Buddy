@@ -1,0 +1,116 @@
+html, body, .App, .Home{
+  position: absolute; width: 100% !important; height: 100% !important;
+}
+.App {
+  text-align: center;
+  background-color: #f6f2eb;
+  font-family: 'Open Sans', sans-serif;
+}
+.Home {
+  background-image: url("https://images.unsplash.com/photo-1495379572396-5f27a279ee91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80") !important;
+  background-size: cover;
+}
+.App-header {
+  background-color: #f6f2eb;
+  width: 100;
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.navMain {
+  font-family: 'Cuprum', sans-serif;  
+  font-size: 32px;
+  /* border: 3px solid red; */
+  /* background-color: #aca9a4; */
+  padding: 0 10rem 0 0;
+  margin: 10px;
+
+}
+.navLink{
+  color: black;
+  padding: 10px;
+  font-size: 24px;
+}
+/* .headerMain{
+  font-family: 'Cuprum', sans-serif;  
+  font-size: 2rem;
+}
+.headerSub {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+} */
+.container {
+  flex: 2;
+  flex-direction: column;
+  justify-content: 'space-evenly';
+  position: absolute;
+  left:0;
+  bottom:50px;
+  right:0;
+}
+.button {
+  width: 40%;
+  height: 40;
+  background-color: #aca9a4;
+  color: black;
+  text-align: center;
+}
+.formContainer {
+
+  width: 50%;
+  margin: auto;
+  text-align: left;
+}
+
+.header3 {
+  background-color: #aca9a4;
+}
+.destinationContainer {
+width: 75%;
+padding: 16px;
+font-weight: 200 ;
+}
+#dropdown-basic {
+  background-color: #aca9a4;
+}
+#map {
+  width: 50%;
+  border: 3px solid red;
+}
+.userSettings, .about {
+  width: 50%;
+  /* text-align: center; */
+  margin: auto;
+}
+.about h3 {
+  background-color: #aca9a4;
+}
+.fab {
+  font-size: 3rem;
+}
+.fa-google-plus-square {
+  color: #db3236;
+}
+
+.google Button{
+  background-color: #db3236;
+  color: white;
+}
+.fa-facebook {
+  color: #3b5998;
+}
+.facebook Button{
+  background-color: #3b5998;
+  color: white;
+}
+/********fonts************
+font-family: 'Cuprum', sans-serif;
+font-family: 'Open Sans', sans-serif;
+*/
+
+/* use border check className to troubleshoot */
+.borderCheck {
+  border: 3px solid green;
+}
