@@ -3,7 +3,7 @@ html, body, .App, .Home{
 }
 .App {
   text-align: center;
-  background-color: #f6f2eb;
+  /* background-color: #f6f2eb; */
   font-family: 'Open Sans', sans-serif;
 }
 .Home {
@@ -31,7 +31,7 @@ html, body, .App, .Home{
 .navLink{
   color: black;
   padding: 10px;
-  font-size: 24px;
+  font-size: 16px;
 }
 /* .headerMain{
   font-family: 'Cuprum', sans-serif;  
