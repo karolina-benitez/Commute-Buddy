@@ -13,6 +13,7 @@ class NavBar extends React.Component {
     fire.auth().signOut();
   }
   render() {
+    const userdata = this.props.userdata
     return (
       <div className='App-header'>
         <Navbar className='navMain'>
@@ -24,7 +25,8 @@ class NavBar extends React.Component {
             <Link to={ROUTES.SIGNIN} className='navLink'>Sign In </Link>
             <Link to={ROUTES.ABOUT} className='navLink'>About </Link>
             <Link to={ROUTES.USERSETTINGS} className='navLink'>Settings </Link>
-            <Link to={ROUTES.HOME} onClick={this.logout} className='navLink'>Sign Out</Link>
+            <Link href="/" onClick={this.logout} className='navLink'>Sign Out</Link>
+            <div className='navgreet'>Welcome back {userdata[0].firstname}!</div>
           </Nav>
         </Navbar>
       </div>

@@ -50,12 +50,11 @@ class App extends Component {
       }
     });
   }
-  //   <div> {this.state.user ? (<Home />) : (<SignIn />)} </div>
   render() {
     return (
       <div className="App">
-        <Router>
 
+        <Router>
           <div>
             <Route exact path={ROUTES.HOME} component={Home} />
             <Route path={ROUTES.SIGNIN} component={SignIn} />

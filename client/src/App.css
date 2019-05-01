@@ -33,6 +33,11 @@ html, body, .App, .Home{
   padding: 10px;
   font-size: 16px;
 }
+.navgreet{
+  color: #285128;
+  padding: 10px;
+  font-size: 16px;
+}
 /* .headerMain{
   font-family: 'Cuprum', sans-serif;  
   font-size: 2rem;
