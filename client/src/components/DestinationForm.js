@@ -4,6 +4,7 @@ import { Form, Col, Row, Dropdown } from 'react-bootstrap'
 
 class DestinationForm extends Component {
   render() {
+    let userdata = this.props.userdata
     return (
       <div className="destinationForm">
         <Form>
@@ -17,9 +18,8 @@ class DestinationForm extends Component {
                   Your Destinations
                   </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Address #1</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">Address #2</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Address #3</Dropdown.Item>
+                  <Dropdown.Item >Address #1
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Col>

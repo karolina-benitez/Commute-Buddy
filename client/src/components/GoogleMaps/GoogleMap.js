@@ -3,7 +3,6 @@ import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from '../../Map';
 
 const API_KEY = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
-console.log(process.env.TOKEN);
 
 export class MapContainer extends Component {
   state = {

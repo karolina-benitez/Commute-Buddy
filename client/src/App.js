@@ -9,7 +9,7 @@ import Notifications from './pages/Notifications';
 import SelectedRoute from './pages/SelectedRoute'
 import About from './pages/About';
 import fire from './config/Fire';
-import * as ROUTES from './constants/routes'
+// import * as ROUTES from './constants/routes'
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
@@ -17,7 +17,7 @@ function PrivateRoute({ component: Component, ...rest }) {
       {...rest}
       render={props =>
         rest.isAuth ? (
-          <Component {...props} />
+          <Component {...props} {...rest} />
         ) : (
             <Redirect
               to={{
@@ -44,7 +44,7 @@ class App extends Component {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user)
       if (user) {
-        this.setState({ user });
+        this.setState({ user: user });
       } else {
         this.setState({ user: null });
       }
@@ -53,16 +53,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <Router>
           <div>
-            <Route exact path={ROUTES.HOME} component={Home} />
-            <Route path={ROUTES.SIGNIN} component={SignIn} />
-            <Route path={ROUTES.ABOUT} component={About} />
-            <PrivateRoute path={ROUTES.MAINPAGE} component={MainPage} isAuth={this.state.user} exact />
-            <PrivateRoute path={ROUTES.USERSETTINGS} component={UserSettings} isAuth={this.state.user} exact />
-            <PrivateRoute path={ROUTES.NOTIFICATIONS} component={Notifications} isAuth={this.state.user} exact />
-            <PrivateRoute path={ROUTES.SELECTEDROUTE} component={SelectedRoute} isAuth={this.state.user} exact />
+            <Route exact path='/' component={Home} />
+            <Route path='/signin' component={SignIn} />
+            <Route path='/about' component={About} />
+            <PrivateRoute path='/main' component={MainPage} isAuth={this.state.user} exact />
+            <PrivateRoute path='/settings' component={UserSettings} isAuth={this.state.user} exact />
+            <PrivateRoute path='/notifications' component={Notifications} isAuth={this.state.user} exact />
+            <PrivateRoute path='/selection' component={SelectedRoute} isAuth={this.state.user} exact />
           </div>
         </Router>
       </div>

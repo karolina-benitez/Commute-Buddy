@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import '../App.css';
 import DateTime from '../components/DateTime';
 import RouteTable from '../components/RouteTable';
-import GoogleMap from '../components/GoogleMaps/GoogleMap';
+// import GoogleMap from '../components/GoogleMaps/GoogleMap';
 import DestinationForm from '../components/DestinationForm';
 import NavBar from '../components/NavBar';
 import { Button } from 'react-bootstrap';
-
 
 class MainPage extends Component {
   constructor(props) {
@@ -14,32 +13,39 @@ class MainPage extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      userdata: []
+      userdata: [],
     };
   }
-  componentDidMount() {
-    fetch('/udata')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result)
-          console.log('it worked')
-          this.setState({
-            isLoaded: true,
-            userdata: result
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+  componentDidUpdate(prevProps) {
+
+    if (prevProps && prevProps.isAuth.email !== this.props.isAuth.email) {
+      let userID = this.props.isAuth.email
+      console.log(userID)
+      fetch(`/udata/${userID}`)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(userID)
+            console.log(result)
+            console.log(result[0].firstname)
+            console.log('it worked')
+            this.setState({
+              isLoaded: true,
+              userdata: result
+            });
+          },
+          (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+          }
+        )
+    }
   }
   render() {
-    const user = this.props.user
-    console.log(user)
+    const userID = this.props.isAuth.uid
+    console.log(userID)
     const { error, isLoaded, userdata } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -50,11 +56,11 @@ class MainPage extends Component {
         <div className="destinationContainer">
           <NavBar userdata={userdata} />
           <hr />
-          <DestinationForm />
+          <DestinationForm userdata={userdata} />
           <DateTime />
           <RouteTable />
           <Button variant="link" className='button' href='selectedroute'>Select Route</Button>
-          <GoogleMap />
+          {/* <GoogleMap /> */}
         </div>
       );
     }
@@ -62,4 +68,3 @@ class MainPage extends Component {
 }
 
 export default MainPage;
-
