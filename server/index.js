@@ -28,7 +28,7 @@ const pool = new Pool({
 //----------Show user data-----------
 app.get("/udata/:email", async (req, res) => {
   const client = await pool.connect();
-  let userdata = await client.query("SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, destinations.address, destinations.arrivedate, destinations.arrivetime FROM udata INNER JOIN destinations ON udata.uid = destinations.uid WHERE email=$1;",
+  let userdata = await client.query("SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, destinations.address, destinations.arrivedate, destinations.arrivetime, destinations.id FROM udata INNER JOIN destinations ON udata.uid = destinations.uid WHERE email=$1;",
     [
       req.params.email
     ]
