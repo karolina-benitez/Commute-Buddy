@@ -28,7 +28,7 @@ const pool = new Pool({
 //----------Show user data-----------
 app.get("/udata/:email", async (req, res) => {
   const client = await pool.connect();
-  let userdata = await client.query("SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, destinations.address, destinations.city, destinations.state, destinations.zip, destinations.arrivedate, destinations.arrivetime FROM udata, destinations WHERE email = $1",
+  let userdata = await client.query("SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, destinations.address, destinations.arrivedate, destinations.arrivetime FROM udata INNER JOIN destinations ON udata.uid = destinations.uid WHERE email=$1;",
     [
       req.params.email
     ]
@@ -36,7 +36,6 @@ app.get("/udata/:email", async (req, res) => {
   client.release();
   res.json(userdata.rows);
   // used to be (userdata.rows[0].rows) //SELECT * FROM udata WHERE uid=$1;
-  //"SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, destinations.address, destinations.city, destinations.state, destinations.zip, destinations.arrivedate, destinations.arrivetime FROM udata, destinations WHERE uid = $1; "
 });
 
 //----------Show user addresses-----------
