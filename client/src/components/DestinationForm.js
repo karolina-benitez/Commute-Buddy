@@ -2,20 +2,34 @@ import React, { Component } from 'react';
 import { Form, Col, Row, Dropdown } from 'react-bootstrap'
 import DateTime from '../components/DateTime';
 
-
 class DestinationForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedAddress: ''
+    }
+  }
+  handleAddressChange = (event) => {
+    this.setState({
+      selectedAddress: event.target.defaultValue
+    })
+    console.log('itworks')
+  }
+  handleClick = (useraddress) => {
+    this.setState({
+      selectedAddress: useraddress.address
+    })
+    console.log(useraddress)
+  }
 
   render() {
     let userdata = this.props.userdata
-    function handleClick() {
-      console.log(userdata.address);
-    }
-    const useraddresses = userdata.map(useraddress =>
-      <Dropdown.Item onClick={() => { handleClick() }}>
+    const useraddresses = userdata.map((useraddress) =>
+      <Dropdown.Item onClick={() => { this.handleClick(useraddress) }}
+        key={useraddress.id}>
         {useraddress.address}
       </Dropdown.Item>
     )
-    console.log(useraddresses)
     return (
       <div className="destinationForm">
         <Form>
@@ -24,7 +38,12 @@ class DestinationForm extends Component {
               Destination
               </Form.Label>
             <Col sm={3}>
-              <Form.Control type="text" placeholder="Address" />
+              <Form.Control
+                type="text"
+                placeholder="Address"
+                defaultValue={this.state.selectedAddress || ''}
+                onChange={this.handleAddressChange}
+              />
             </Col>
             <Col sm={3}>
               <Dropdown>

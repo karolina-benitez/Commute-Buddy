@@ -16,7 +16,6 @@ class MainPage extends Component {
     };
   }
   componentDidUpdate(prevProps) {
-
     if (prevProps && prevProps.isAuth.email !== this.props.isAuth.email) {
       let userID = this.props.isAuth.email
       console.log(userID)
