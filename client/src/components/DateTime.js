@@ -7,13 +7,10 @@ class DateTime extends React.Component {
       <div className='dateTime'>
         <Form>
           <Form.Group as={Row}>
-            <Form.Label column sm={2}>
-              Arrive By
-              </Form.Label>
             <Col sm={10}>
               <Dropdown>
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
-                  Date and Time picker
+                  Arrive By
                   </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href="#/action-1">Address #1</Dropdown.Item>

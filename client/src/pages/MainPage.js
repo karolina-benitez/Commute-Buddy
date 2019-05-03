@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import DateTime from '../components/DateTime';
 import RouteTable from '../components/RouteTable';
 // import GoogleMap from '../components/GoogleMaps/GoogleMap';
 import DestinationForm from '../components/DestinationForm';
@@ -44,8 +43,8 @@ class MainPage extends Component {
     }
   }
   render() {
-    const userID = this.props.isAuth.uid
-    console.log(userID)
+    const selectedUserData = this.state.userdata
+    console.log(selectedUserData)
     const { error, isLoaded, userdata } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -57,7 +56,7 @@ class MainPage extends Component {
           <NavBar userdata={userdata} />
           <hr />
           <DestinationForm userdata={userdata} />
-          <DateTime />
+
           <RouteTable />
           <Button variant="link" className='button' href='selectedroute'>Select Route</Button>
           {/* <GoogleMap /> */}
