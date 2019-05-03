@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import * as ROUTES from '../constants/routes'
 import { Navbar, Nav } from 'react-bootstrap'
 import fire from '../config/Fire';
 

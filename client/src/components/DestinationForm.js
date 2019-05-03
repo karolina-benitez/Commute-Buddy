@@ -4,42 +4,14 @@ import DateTime from '../components/DateTime';
 
 
 class DestinationForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     error: null,
-  //     isLoaded: false,
-  //     userdata: [],
-  //   };
-  // }
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps && prevProps.isAuth.email !== this.props.isAuth.email) {
-  //     let userID = this.props.isAuth.email
-  //     console.log(userID)
-  //     fetch(`/udata/${userID}`)
-  //       .then(res => res.json())
-  //       .then(
-  //         (result) => {
-  //           console.log(userID)
-  //           console.log('it worked')
-  //           this.setState({
-  //             isLoaded: true,
-  //             userdata: result
-  //           });
-  //         },
-  //         (error) => {
-  //           this.setState({
-  //             isLoaded: true,
-  //             error
-  //           });
-  //         }
-  //       )
-  //   }
-  // }
+
   render() {
     let userdata = this.props.userdata
+    function handleClick() {
+      console.log(userdata.address);
+    }
     const useraddresses = userdata.map(useraddress =>
-      <Dropdown.Item >
+      <Dropdown.Item onClick={() => { handleClick() }}>
         {useraddress.address}
       </Dropdown.Item>
     )
