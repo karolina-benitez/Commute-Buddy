@@ -87,13 +87,11 @@ class App extends Component {
     this.authListener();
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate');
+    console.log('~~~~~~~~~componentDidUpdate~~~~~~~~~~~~');
     console.log('prevprops', prevProps)
-    console.log('prevstate', prevState)
-    const user = this.state.user
-    console.log(this.state.user.email)
-    if (prevState.user !== this.state.user) {
-      // if (this.state.user.email !== this.user.email) {
+    console.log('prevstate', prevState, prevState.user.email)
+    console.log('current state', this.state.user.email)
+    if (prevState.user.email !== this.state.user.email) {
       console.log("I got here", this.state.user)
       console.log(this.state.user.email)
       let userID = this.state.user.email
@@ -104,7 +102,7 @@ class App extends Component {
           (result) => {
             console.log(userID)
             console.log(result)
-            console.log('it worked')
+            console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
             this.setState({
               isLoaded: true,
               userdata: result
@@ -124,6 +122,7 @@ class App extends Component {
     console.log(this.state.user)
     console.log(this.state.userdata)
     const { error, isLoaded, userdata } = this.state;
+    console.log(userdata)
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -141,16 +140,20 @@ class App extends Component {
                 component={About} />
               <PrivateRoute path='/main'
                 component={MainPage}
-                isAuth={this.state.user} />
-              <PrivateRoute path='/settings'
+                isAuth={this.state.user}
+                userdata={this.state.userdata} />
+              <PrivateRoute path='/usersettings'
                 component={UserSettings}
-                isAuth={this.state.user} />
+                isAuth={this.state.user}
+                userdata={this.state.userdata} />
               <PrivateRoute path='/notifications'
                 component={Notifications}
-                isAuth={this.state.user} />
+                isAuth={this.state.user}
+                userdata={this.state.userdata} />
               <PrivateRoute path='/selection'
                 component={SelectedRoute}
-                isAuth={this.state.user} />
+                isAuth={this.state.user}
+                userdata={this.state.userdata} />
             </div>
           </Router>
         </div>

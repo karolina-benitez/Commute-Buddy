@@ -13,16 +13,14 @@ class NavBar extends React.Component {
   }
   render() {
     const userdata = this.props.userdata
-
+    console.log(userdata)
     return (
       <div className='App-header'>
         <Navbar className='navMain'>
           <Navbar.Brand className='navMain' >Commute Buddy</Navbar.Brand>
           <Nav className="mr-auto">
-            <Link to='/' className='navLink'>Home </Link>
-            <Link to='/main' className='navLink'>Main Page </Link>
-            <Link to='/about' className='navLink'>About </Link>
-            <Link to='/settings' className='navLink'>Settings </Link>
+            <Link to='/main' className='navLink'> Home </Link>
+            <Link to='/usersettings' className='navLink'>Settings </Link>
             <Link to='/'
               onClick={this.logout} className='navLink'>Sign Out</Link>
             <div className='navgreet'>Welcome back {userdata[0].firstname}!</div>

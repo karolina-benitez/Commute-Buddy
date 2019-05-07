@@ -1,9 +1,11 @@
 import React from 'react'
+import NonAuthNavBar from '../components/NonAuthNavBar';
 
 class About extends React.Component {
   render() {
     return (
       <div className='about'>
+        <NonAuthNavBar />
         <h3>About Commute Buddy</h3>
         <h4>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe inventore voluptate odit deleniti culpa distinctio, ipsam est soluta. Facere sit sed laudantium nostrum quam, provident excepturi tempore mollitia doloremque possimus.</h4>
         <h3>How to use</h3>

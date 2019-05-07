@@ -9,7 +9,8 @@ import { Button } from 'react-bootstrap';
 class MainPage extends Component {
 
   render() {
-    const userdata = this.props.userdata;
+    const userdata = this.props.userdata
+
     console.log(this.props.userdata)
     console.log(userdata)
     return (
@@ -18,7 +19,7 @@ class MainPage extends Component {
         <hr />
         <DestinationForm userdata={userdata} />
 
-        <RouteTable />
+        <RouteTable userdata={userdata} />
         <Button variant="link" className='button' href='selectedroute'>Select Route</Button>
         {/* <GoogleMap /> */}
         {/* <NewGoogleMap

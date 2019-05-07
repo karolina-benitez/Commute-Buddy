@@ -9,7 +9,7 @@ class Notifications extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar userdata={this.props.userdata} />
         <h3>We'll Notify you of any changes</h3>
         <h5>Selected Route</h5>
         <h5>Arrive by: April 30, 2019 @ 8:25 AM</h5>

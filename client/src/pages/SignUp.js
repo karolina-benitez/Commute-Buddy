@@ -1,5 +1,6 @@
 import React from 'react'
 import fire from '../config/Fire'
+import NonAuthNavBar from '../components/NonAuthNavBar';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div>
+        <NonAuthNavBar />
         <h3 className='header3'>Create an account</h3>
         <div className='col-md-6'>
           <form>

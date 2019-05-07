@@ -1,6 +1,7 @@
 import React from 'react'
 import fire from '../config/Fire'
 import { Link } from 'react-router-dom'
+import NonAuthNavBar from '../components/NonAuthNavBar';
 
 
 class SignIn extends React.Component {
@@ -35,6 +36,7 @@ class SignIn extends React.Component {
   render() {
     return (
       <div>
+        <NonAuthNavBar />
         <h3 className='header3'>Sign in</h3>
         <div className='col-md-6'>
           <form>

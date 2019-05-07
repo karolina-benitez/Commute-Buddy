@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import NotificationsButton from '../components/NotificationsButton'
 import { Button, Form, Col } from 'react-bootstrap';
-// import NavBar from '../components/NavBar';
+import NavBar from '../components/NavBar';
 
 class UserSettings extends Component {
   constructor(props) {
@@ -18,11 +18,11 @@ class UserSettings extends Component {
   }
   //~~~~~~ form state~~~~~~~~~
   render() {
-    const userdata = this.props.isAuth
+    const userdata = this.props.userdata
     console.log(userdata)
     return (
       <div className="userSettings">
-        {/* <NavBar userdata={userdata} /> */}
+        <NavBar userdata={userdata} />
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridPassword">

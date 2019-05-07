@@ -7,7 +7,7 @@ class Notifications extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar userdata={this.props.userdata} />
         <h3>Select Notification types</h3>
         <Form >
           {
