@@ -2,13 +2,38 @@ import React, { Component } from 'react';
 import '../App.css';
 import NotificationsButton from '../components/NotificationsButton'
 import { Button, Form, Col } from 'react-bootstrap';
+// import NavBar from '../components/NavBar';
 
 class UserSettings extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      firstname: '',
+      lastname: '',
+      userEmail: '',
+      password: '',
+      password2: '',
+      phonenumber: ''
+    }
+  }
+  //~~~~~~ form state~~~~~~~~~
   render() {
+    const userdata = this.props.isAuth
+    console.log(userdata)
     return (
       <div className="userSettings">
-        <NotificationsButton />
+        {/* <NavBar userdata={userdata} /> */}
         <Form>
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGridPassword">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control type="text" placeholder="First Name" />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridPassword">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control type="text" placeholder="Last Name" />
+            </Form.Group>
+          </Form.Row>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Email</Form.Label>
@@ -27,43 +52,17 @@ class UserSettings extends Component {
           </Form.Row>
 
           <Form.Group controlId="formGridAddress1">
-            <Form.Label>Address</Form.Label>
-            <Form.Control placeholder="1234 Main St" />
+            <Form.Label>Phone Number (Must be able to receive text notifications)</Form.Label>
+            <Form.Control placeholder="Phone Number" />
           </Form.Group>
 
-          <Form.Group controlId="formGridAddress2">
-            <Form.Label>Address 2</Form.Label>
-            <Form.Control placeholder="Apartment, studio, or floor" />
-          </Form.Group>
-
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridCity">
-              <Form.Label>City</Form.Label>
-              <Form.Control />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>State</Form.Label>
-              <Form.Control as="select">
-                <option>Choose...</option>
-                <option>...</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control />
-            </Form.Group>
-          </Form.Row>
-
-          <Form.Group id="formGridCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
-
+          <NotificationsButton />
           <Button variant="link" className='button' href='main' type="submit">
             Submit
             </Button>
         </Form>
+
+
       </div>
     )
   }
