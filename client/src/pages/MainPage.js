@@ -10,7 +10,6 @@ class MainPage extends Component {
 
   render() {
     const userdata = this.props.userdata
-
     console.log(this.props.userdata)
     console.log(userdata)
     return (
@@ -18,16 +17,8 @@ class MainPage extends Component {
         <NavBar userdata={userdata} />
         <hr />
         <DestinationForm userdata={userdata} />
-
         <RouteTable userdata={userdata} />
-        <Button variant="link" className='button' href='selectedroute'>Select Route</Button>
         {/* <GoogleMap /> */}
-        {/* <NewGoogleMap
-            google={this.props.google}
-            center={{ lat: 37.7749, lng: -122.4194 }}
-            height='300px'
-            zoom={15}
-          /> */}
       </div>
     );
   }

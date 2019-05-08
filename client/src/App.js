@@ -30,13 +30,6 @@ function PrivateRoute({ component: Component, ...rest }) {
   );
 }
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     user: {}
-  //   }
-  // }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +39,7 @@ class App extends Component {
       userdata: [],
     };
   }
+
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user)
@@ -57,76 +51,59 @@ class App extends Component {
     });
   }
 
-  // componentDidMount() {
-  //   this.authListener();
-  //   console.log(this.state.user)
-  //   let userID = this.state.user.email
-  //   console.log(userID)
-  //   fetch(`/udata/${userID}`)
-  //     .then(res => res.json())
-  //     .then(
-  //       (result) => {
-  //         console.log(userID)
-  //         console.log(result)
-  //         console.log('it worked')
-  //         this.setState({
-  //           isLoaded: true,
-  //           userdata: result
-  //         });
-  //       },
-  //       (error) => {
-  //         this.setState({
-  //           isLoaded: true,
-  //           error
-  //         });
-  //       }
-  //     )
-  // }
-
   componentDidMount() {
     this.authListener();
   }
+
   componentDidUpdate(prevProps, prevState) {
-    console.log('~~~~~~~~~componentDidUpdate~~~~~~~~~~~~');
-    console.log('prevprops', prevProps)
-    console.log('prevstate', prevState, prevState.user.email)
-    console.log('current state', this.state.user.email)
-    if (prevState.user.email !== this.state.user.email) {
-      console.log("I got here", this.state.user)
-      console.log(this.state.user.email)
-      let userID = this.state.user.email
-      console.log(userID)
-      fetch(`/udata/${userID}`)
-        .then(res => res.json())
-        .then(
-          (result) => {
-            console.log(userID)
-            console.log(result)
-            console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
-            this.setState({
-              isLoaded: true,
-              userdata: result
-            });
-          },
-          (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-          }
-        )
+    console.log(this.state.user)
+    if (this.state.user) {
+      console.log('~~~~~~~~~componentDidUpdate~~~~~~~~~~~~');
+      console.log('prevprops', prevProps)
+      // console.log('prevstate', prevState, prevState.user.email)
+      console.log('current state', this.state.user.email)
+      if (!prevState.isLoaded) {
+        console.log("I got here", this.state.user)
+        console.log(this.state.user.email)
+        let userID = this.state.user.email
+        console.log(userID)
+        fetch(`/udata/${userID}`)
+          .then(res => res.json())
+          .then(
+            (result) => {
+              console.log(userID)
+              console.log(result)
+              console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
+              this.setState({
+                isLoaded: true,
+                userdata: result
+              });
+            },
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
+            }
+          )
+      }
     }
-  }
+
+
+    }
+  
 
   render() {
     console.log(this.state.user)
     console.log(this.state.userdata)
-    const { error, isLoaded, userdata } = this.state;
+    const { error, userdata, isLoaded } = this.state;
     console.log(userdata)
     if (error) {
       return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>
+      // } else if (!isLoaded) {
+      //   return <div>
+      //     Loooooooooaddddding
+      //   </div>
     } else {
       return (
         <div className="App">

@@ -39,7 +39,7 @@ class SignIn extends React.Component {
         <NonAuthNavBar />
         <h3 className='header3'>Sign in</h3>
         <div className='col-md-6'>
-          <form>
+          <div>
             <div className='form-group'>
               <label for='exampleInputEmail'>Email Address</label>
               <input value={this.state.email} onChange={this.handleChange} type="email" name='email' className='form-control' id='exampleInputEmail' aria-describedby='emailHelp' placeholder='Enter Email' />
@@ -53,7 +53,7 @@ class SignIn extends React.Component {
               <button type='submit' onClick={this.login} className='btn btn-primary' >Login</button>
             </Link>
             <button onClick={this.signup} style={{ marginLeft: '25px' }} className='btn btn-success'>Sign Up</button>
-          </form>
+          </div>
         </div>
       </div>
     );

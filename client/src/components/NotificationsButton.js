@@ -6,7 +6,6 @@ class NotificationsButton extends Component {
   render() {
     return (
       <div>
-
         <Button variant="light" size="sm" className='button' href="/notifications">
           Notifications Settings
         </Button>

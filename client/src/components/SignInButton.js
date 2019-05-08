@@ -6,10 +6,10 @@ class SignInButton extends React.Component {
     return (
       <div>
         <ButtonToolbar bsPrefix='container'>
-          <Button variant="light" size="md" className='button' href="/main">
+          <Button variant="light" size="md" className='button' href="/signin">
             Sign In
           </Button>
-          <Button variant="light" size="md" className='button' href="/main">
+          <Button variant="light" size="md" className='button' href="/signup">
             Sign Up
           </Button>
         </ButtonToolbar>

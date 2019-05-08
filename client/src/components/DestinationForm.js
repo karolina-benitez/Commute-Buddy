@@ -9,8 +9,12 @@ class DestinationForm extends Component {
     super(props)
     this.state = {
       startLocation: '',
-      destination: ''
+      destination: '',
+      newuserdata: this.props.userdata,
+      isLoaded: false,
+      googleAPI: []
     }
+    console.log(this.state.newuserdata)
   }
   //~~~~~~~~~~~~Start Address~~~~~~~
   handleStartLocation = (event) => {
@@ -38,9 +42,37 @@ class DestinationForm extends Component {
     })
     console.log(useraddress)
   }
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  componentDidMount() {
+    fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=383%20Dolores%20Street,%20San%20Francisco,%20CA%2094110&destination=85%20Bluxome%20St,%20San%20Francisco,%20CA%2094107&key=AIzaSyDOvkQbCSQuh0G7F8cEqm2G6igPby0rJ9c&mode=transit&alternative=true`)
+      // .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result.routes)
+          console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
+          this.setState({
+            isLoaded: true,
+            googleAPI: result
+          });
+        },
+        (error) => {
+          console.log(error)
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  }
+
+
   render() {
+    console.log(this.state.googleAPI)
     let userdata = this.props.userdata
-    const useraddresses = userdata.map((useraddress) =>
+    // console.log(userdata)
+    // console.log(this.state.newuserdata)
+
+    const useraddresses = this.state.newuserdata.map((useraddress) =>
       <Dropdown.Item onClick={() => { this.handleClick(useraddress) }}
         key={useraddress.id}>
         {useraddress.address}
@@ -111,6 +143,8 @@ class DestinationForm extends Component {
             </Col>
           </Form.Group>
         </Form>
+        <Button variant="link" className='button' href='/selection'>Select Route</Button>
+
       </div>
     );
   }

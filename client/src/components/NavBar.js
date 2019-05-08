@@ -20,10 +20,11 @@ class NavBar extends React.Component {
           <Navbar.Brand className='navMain' >Commute Buddy</Navbar.Brand>
           <Nav className="mr-auto">
             <Link to='/main' className='navLink'> Home </Link>
+            <Link to='/selection' className='navLink'>Routes </Link>
             <Link to='/usersettings' className='navLink'>Settings </Link>
             <Link to='/'
               onClick={this.logout} className='navLink'>Sign Out</Link>
-            <div className='navgreet'>Welcome back {userdata[0].firstname}!</div>
+            {/* <div className='navgreet'>Welcome back {userdata[0].firstname}!</div> */}
           </Nav>
         </Navbar>
       </div>

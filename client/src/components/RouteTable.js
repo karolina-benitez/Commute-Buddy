@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Form } from 'react-bootstrap'
 
 class RouteTable extends React.Component {
   render() {
@@ -8,6 +8,7 @@ class RouteTable extends React.Component {
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
+              <th></th>
               <th>Transit Options</th>
               <th>Price</th>
               <th>Duration</th>
@@ -16,18 +17,21 @@ class RouteTable extends React.Component {
           </thead>
           <tbody>
             <tr>
+              <Form.Check type="radio" aria-label="radio 1" />
               <td>Driving</td>
               <td>N/A</td>
               <td>75 mins</td>
               <td>9:10 AM</td>
             </tr>
             <tr>
+              <Form.Check type="radio" aria-label="radio 1" />
               <td>Bus</td>
               <td>$5.50</td>
               <td>45 mins</td>
               <td>8:45 AM</td>
             </tr>
             <tr>
+              <Form.Check type="radio" aria-label="radio 1" />
               <td>Ferry</td>
               <td>$7.00</td>
               <td>25 mins</td>
