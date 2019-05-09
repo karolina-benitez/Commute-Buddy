@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import NotificationsButton from '../components/NotificationsButton'
-import { Button, Form, Col } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
 
 class UserSettings extends Component {
@@ -10,11 +9,33 @@ class UserSettings extends Component {
     this.state = {
       firstname: '',
       lastname: '',
-      userEmail: '',
-      password: '',
-      password2: '',
-      phonenumber: ''
+      phonenumber: '',
+      trafficalert: false,
+      eventalert: false,
+      weatheralert: false,
+      transitalert: false
     }
+  }
+  handleTraffic = (e) => {
+    console.log('handletraffic')
+    this.setState({
+      trafficalert: !this.state.trafficalert
+    });
+  }
+  handleEvent = (e) => {
+    this.setState({
+      eventalert: !this.state.eventalert
+    });
+  }
+  handleWeather = (e) => {
+    this.setState({
+      weatheralert: !this.state.weatheralert
+    });
+  }
+  handleTransit = (e) => {
+    this.setState({
+      transitalert: !this.state.transitalert
+    });
   }
   //~~~~~~ form state~~~~~~~~~
   render() {
@@ -23,43 +44,64 @@ class UserSettings extends Component {
     return (
       <div className="userSettings">
         <NavBar userdata={userdata} />
+        <h3>Update Profile</h3>
         <Form>
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control type="text" placeholder="First Name" />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" placeholder="Last Name" />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Current Email" />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-          </Form.Row>
-
-          <Form.Group controlId="formGridAddress1">
-            <Form.Label>Phone Number (Must be able to receive text notifications)</Form.Label>
-            <Form.Control placeholder="Phone Number" />
+          <Form.Group>
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="First Name"
+              value={this.state.firstname}
+              onChange={e => this.setState({ firstname: e.target.value })} />
           </Form.Group>
-
-          <NotificationsButton />
+          <Form.Group>
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Last Name"
+              value={this.state.lastname}
+              onChange={e => this.setState({ lastname: e.target.value })} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>
+              Phone Number (Must be able to receive text notifications)
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder="Phone Number"
+              value={this.state.phonenumber}
+              onChange={e => this.setState({ phonenumber: e.target.value })} />
+          </Form.Group>
+          {/*~~~~~~~~ Notification Preferences ~~~~~~~~~~~~~ */}
+          <h3>Select Notification types</h3>
+          <p>
+            Traffic Alert
+            <br></br>
+            <input type="checkbox"
+              onChange={this.handleTraffic} />
+          </p>
+          <p>
+            Weather Alert
+            <br></br>
+            <input type="checkbox"
+              onChange={this.handleWeather} />
+          </p>
+          <p>
+            Transit Alert
+            <br></br>
+            <input type="checkbox"
+              onChange={this.handleTransit} />
+          </p>
+          <p>
+            Event Alert
+            <br></br>
+            <input type="checkbox"
+              onChange={this.handleEvent} />
+          </p>
+          {/*~~~~~~~~ submit button ~~~~~~~~~~~~~ */}
           <Button variant="link" className='button' href='main' type="submit">
             Submit
-            </Button>
+          </Button>
         </Form>
 
 

@@ -24,7 +24,7 @@ class NavBar extends React.Component {
             <Link to='/usersettings' className='navLink'>Settings </Link>
             <Link to='/'
               onClick={this.logout} className='navLink'>Sign Out</Link>
-            {/* <div className='navgreet'>Welcome back {userdata[0].firstname}!</div> */}
+            <div className='navgreet'>Welcome back {userdata[0].firstname}!</div>
           </Nav>
         </Navbar>
       </div>

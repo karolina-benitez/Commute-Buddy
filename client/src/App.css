@@ -119,3 +119,9 @@ font-family: 'Open Sans', sans-serif;
 .borderCheck {
   border: 3px solid green;
 }
+.settingsContainer {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center;
+  justify-content: center; */
+}

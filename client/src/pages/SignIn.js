@@ -48,7 +48,7 @@ class SignIn extends React.Component {
               <label for='exampleInputPassword1'>Password</label>
               <input value={this.state.password} onChange={this.handleChange} type="password" name='password' className='form-control' id='exampleInputPassword' aria-describedby='emailHelp' placeholder='Password' />
             </div>
-            <Link to='/main'
+            <Link href='/main'
               onClick={this.logout} className='navLink'>
               <button type='submit' onClick={this.login} className='btn btn-primary' >Login</button>
             </Link>

@@ -29,6 +29,7 @@ function PrivateRoute({ component: Component, ...rest }) {
     />
   );
 }
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -36,10 +37,10 @@ class App extends Component {
       user: {},
       error: null,
       isLoaded: false,
-      userdata: [],
+      userdata: []
     };
   }
-
+//~~~~~~~~~~~~~~ User Authentication~~~~~~~~~~~~~~~~~~~~~~~~
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user)
@@ -54,16 +55,50 @@ class App extends Component {
   componentDidMount() {
     this.authListener();
   }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
+
+handleEditUser = (email, firstname, lastname, phonenumber, trafficalert, weatheralert, eventalert, transitalert) => {
+
+  const user = {
+    firstname,
+    lastname,
+    phonenumber,
+    trafficalert, 
+    weatheralert,
+    eventalert,
+    transitalert, 
+  }
+  
+  fetch(`/notifications/${email}`, {
+    method: 'put',
+    body: JSON.stringify(user),
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(newEvent => {
+      const events = this.state.events.map(event => {
+        return (parseInt(event.id) === parseInt(newEvent.id)) ? newEvent : event;
+      });
+      this.setState({ events });
+    })
+};
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//~~~~~~~~~~~~~~ 'Get' User data from DB ~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidUpdate(prevProps, prevState) {
     console.log(this.state.user)
     if (this.state.user) {
-      console.log('~~~~~~~~~componentDidUpdate~~~~~~~~~~~~');
-      console.log('prevprops', prevProps)
-      // console.log('prevstate', prevState, prevState.user.email)
-      console.log('current state', this.state.user.email)
       if (!prevState.isLoaded) {
-        console.log("I got here", this.state.user)
         console.log(this.state.user.email)
         let userID = this.state.user.email
         console.log(userID)
@@ -88,10 +123,8 @@ class App extends Component {
           )
       }
     }
+  }
 
-
-    }
-  
 
   render() {
     console.log(this.state.user)
@@ -100,10 +133,10 @@ class App extends Component {
     console.log(userdata)
     if (error) {
       return <div>Error: {error.message}</div>;
-      // } else if (!isLoaded) {
-      //   return <div>
-      //     Loooooooooaddddding
-      //   </div>
+    } else if (!isLoaded) {
+      return <div>
+        Loooooooooaddddding
+        </div>
     } else {
       return (
         <div className="App">
