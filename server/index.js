@@ -65,19 +65,24 @@ app.post('/newUser', async (req, res) => {
   req.body.firstname = emptyToNull(req.body.firstname);
   req.body.lastname = emptyToNull(req.body.lastname);
   req.body.phonenumber = emptyToNull(req.body.phonenumber);
+  req.body.email = emptyToNull(req.body.email);
+  req.body.trafficalert = emptyToNull(req.body.trafficalert);
+  req.body.weatheralert = emptyToNull(req.body.weatheralert);
+  req.body.eventalert = emptyToNull(req.body.eventalert);
+  req.body.transitalert = emptyToNull(req.body.transitalert);
 
-  client.query('INSERT INTO udata(uid, firstname, lastname, email, phonenumber) VALUES($1, $2, $3, $4, $5) RETURNING *', [req.body.uid, req.body.firstname, req.body.lastname, req.body.email, req.body.phonenumber],
+  client.query('INSERT INTO udata(uid, firstname, lastname, phonenumber, email, trafficalert, weatheralert, eventalert, transitalert) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [req.body.uid, req.body.firstname, req.body.lastname, req.body.phonenumber, req.body.email, req.body.trafficalert, req.body.weatheralert, req.body.eventalert, req.body.transitalert],
     function (err, result) {
       if (err) {
         console.error(err);
         res.status(500).send("Server error: " + err);
         client.release();
-      } if (req.body.firstname == null || req.body.lastname == null || req.body.uid == null || req.body.email == null || req.body.phonenumber == null) {
+      } if (req.body.firstname == null || req.body.lastname == null || req.body.uid == null || req.body.email == null || req.body.phonenumber == null || req.body.trafficalert == null || req.body.weatheralert == null || req.body.eventalert == null || req.body.transitalert == null) {
         res.status(400).send("Conflict creating user: All fields are required")
         client.release();
       }
       else {
-        res.status(201).json(result.rows[0]);
+        res.status(201).json(result.rows);
         client.release();
       }
     });
