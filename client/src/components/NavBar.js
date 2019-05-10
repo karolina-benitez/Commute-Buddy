@@ -13,7 +13,6 @@ class NavBar extends React.Component {
   }
   render() {
     const userdata = this.props.userdata
-    console.log(userdata)
     return (
       <div className='App-header'>
         <Navbar className='navMain'>

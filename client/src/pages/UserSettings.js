@@ -7,13 +7,16 @@ class UserSettings extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      uid: this.props.isAuth.uid,
       firstname: '',
       lastname: '',
       phonenumber: '',
+      email: this.props.isAuth.email,
       trafficalert: false,
       eventalert: false,
       weatheralert: false,
-      transitalert: false
+      transitalert: false,
+      userdata: this.props.userdata
     }
   }
   handleTraffic = (e) => {
@@ -37,15 +40,41 @@ class UserSettings extends Component {
       transitalert: !this.state.transitalert
     });
   }
+  submitHandler = (e) => {
+
+    const data = {
+      uid: this.props.isAuth.uid,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      phonenumber: this.state.phonenumber,
+      email: this.props.isAuth.email,
+      trafficalert: this.state.trafficalert,
+      eventalert: this.state.eventalert,
+      weatheralert: this.state.weatheralert,
+      transitalert: this.state.transitalert,
+    }
+    e.preventDefault()
+    fetch(`/newUser`, {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then((result) => result.json())
+      .then((info) => { console.log(info); })
+    console.log(this.state)
+  }
+
   //~~~~~~ form state~~~~~~~~~
   render() {
+
     const userdata = this.props.userdata
-    console.log(userdata)
     return (
       <div className="userSettings">
         <NavBar userdata={userdata} />
         <h3>Update Profile</h3>
-        <Form>
+        <Form onSubmit={this.submitHandler}>
           <Form.Group>
             <Form.Label>First Name</Form.Label>
             <Form.Control
@@ -99,11 +128,13 @@ class UserSettings extends Component {
               onChange={this.handleEvent} />
           </p>
           {/*~~~~~~~~ submit button ~~~~~~~~~~~~~ */}
-          <Button variant="link" className='button' href='main' type="submit">
+          <Button variant="link" className='button' type="submit">
             Submit
           </Button>
         </Form>
-
+        <Button variant="link" href='main'>
+          Back to Settings
+        </Button>
 
       </div>
     )

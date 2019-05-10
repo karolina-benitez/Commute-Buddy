@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Col, Row, Dropdown, Button } from 'react-bootstrap'
-import DateTime from '../components/DateTime';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class DestinationForm extends Component {
   constructor(props) {
@@ -8,16 +9,11 @@ class DestinationForm extends Component {
     this.state = {
       origin: '',
       destination: '',
-      arrivedate: '',
-      // arrivetime: '',
+      arrivedate: new Date(),
       newuserdata: this.props.userdata,
       isLoaded: false,
       googleAPI: []
     }
-    this.handleOrigin = this.handleOrigin
-    this.handleDestination = this.handleDestination
-    this.handleArriveDate = this.handleArriveDate
-    // this.handleArriveTime = this.handleArriveTime
   }
   //~~~~~~ Change data state ~~~~~~~~~~~~~
   handleOrigin = (event) => {
@@ -30,38 +26,25 @@ class DestinationForm extends Component {
       destination: event.target.value
     });
   }
-  handleArriveDate = (event) => {
+  handleChange = (date) => {
     this.setState({
-      arrivedate: event.target.value
+      arrivedate: date
     });
   }
-  // handleArriveTime = (event) => {
-  //   this.setState({
-  //     arrivetime: event.target.value
-  //   });
-  // }
-  //~~~~~~~~~~~~Start Address~~~~~~~
+  //~~~~~~~~~~~~ Select Origin~~~~~~~
   handleClick = (useraddress) => {
     this.setState({
       origin: useraddress.address
     })
   }
-  //~~~~~~~~~~~~Destination Address~~~~~~~~~~~~
+  //~~~~~~~~~~~~Select Destination~~~~~~~~~~~~
   handleClick2 = (useraddress) => {
     this.setState({
       destination: useraddress.address
     })
   }
 
-
   render() {
-    console.log(this.state.newuserdata)
-    console.log(this.state.origin)
-    console.log(this.state.destination)
-    console.log(this.state.arrivetime)
-    console.log(this.state.arrivedate)
-    // console.log(this.state.isLoaded)
-    // console.log(this.state.googleAPI)
     let userdata = this.props.userdata
 
     //start address
@@ -136,10 +119,17 @@ class DestinationForm extends Component {
               </Dropdown>
             </Col>
             <Col sm={3}>
-              <DateTime
-                // arrivedate={this.state.arrivedate}
-                // arrivetime={this.state.arrivetime} 
-                handleArriveDate={this.handleArriveDate} />
+              <DatePicker
+                selected={this.state.arrivedate}
+                onChange={this.handleChange}
+                // onChange={this.handleArriveDate}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeCaption="time"
+                value={this.state.arrivedate}
+              />
             </Col>
             <Col sm={1}>
               <Button variant="light"> Select </Button>
@@ -152,7 +142,6 @@ class DestinationForm extends Component {
           href='/selection'>
           Select Route
         </Button>
-
       </div>
     );
   }
@@ -160,61 +149,32 @@ class DestinationForm extends Component {
 
 export default DestinationForm;
 
-
-//~~~~~~~~~~~~Start Address~~~~~~~
-//   // handleorigin = (event) => {
-//   //   this.setState({
-//   //     origin: event.target.defaultValue
-//   //   })
-//   //   console.log('itworks')
+// //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   // componentDidMount() {
+//   //   fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=383%20Dolores%20Street,%20San%20Francisco,%20CA%2094110&destination=85%20Bluxome%20St,%20San%20Francisco,%20CA%2094107&key=AIzaSyDOvkQbCSQuh0G7F8cEqm2G6igPby0rJ9c&mode=transit&alternative=true`)
+//   //     // .then(res => res.json())
+//   //     .then(
+//   //       (result) => {
+//   //         console.log(result.routes)
+//   //         console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
+//   //         this.setState({
+//   //           isLoaded: true,
+//   //           googleAPI: result
+//   //         });
+//   //       },
+//   //       (error) => {
+//   //         console.log(error)
+//   //         this.setState({
+//   //           isLoaded: true,
+//   //           error
+//   //         });
+//   //       }
+//   //     )
 //   // }
-//   handleClick = (useraddress) => {
-//     this.setState({
-//       origin: useraddress.address
-//     })
-//     console.log(useraddress.address)
-//     console.log(this.state.origin)
-//   }
-//~~~~~~~~~~~~Destination Address~~~~~~~~~~~~
-//   // handleSelectedAddress = (event) => {
-//   //   this.setState({
-//   //     destination: event.target.defaultValue
-//   //   })
-//   //   console.log('itworks')
-//   // }
-//   handleClick2 = (useraddress) => {
-//     this.setState({
-//       destination: useraddress.address
-//     })
-//     console.log(useraddress.address)
-//     console.log(this.state.destination)
-//   }
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  // componentDidMount() {
-  //   fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=383%20Dolores%20Street,%20San%20Francisco,%20CA%2094110&destination=85%20Bluxome%20St,%20San%20Francisco,%20CA%2094107&key=AIzaSyDOvkQbCSQuh0G7F8cEqm2G6igPby0rJ9c&mode=transit&alternative=true`)
-  //     // .then(res => res.json())
-  //     .then(
-  //       (result) => {
-  //         console.log(result.routes)
-  //         console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
-  //         this.setState({
-  //           isLoaded: true,
-  //           googleAPI: result
-  //         });
-  //       },
-  //       (error) => {
-  //         console.log(error)
-  //         this.setState({
-  //           isLoaded: true,
-  //           error
-  //         });
-  //       }
-  //     )
-  // }
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  // componentDidUpdate(prevProps, preveState) {
-  //   if (this.state.origin !== null && this.state.destination !== null) {
+//   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   // componentDidUpdate(prevProps, preveState) {
+//   //   if (this.state.origin !== null && this.state.destination !== null) {
 
-  //   }
-  // }
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   //   }
+//   // }
+// //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
