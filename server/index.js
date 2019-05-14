@@ -96,9 +96,20 @@ app.put("/udata/:email", async (req, res) => {
   req.body.firstname = emptyToNull(req.body.firstname);
   req.body.lastname = emptyToNull(req.body.lastname);
   req.body.phonenumber = emptyToNull(req.body.phonenumber);
+  req.body.trafficalert = emptyToNull(req.body.trafficalert);
+  req.body.weatheralert = emptyToNull(req.body.weatheralert);
+  req.body.eventalert = emptyToNull(req.body.eventalert);
+  req.body.transitalert = emptyToNull(req.body.transitalert);
 
-  client.query('UPDATE udata SET firstname=COALESCE($1,firstname), lastname=COALESCE($2,lastname), phonenumber=COALESCE($3,phonenumber) WHERE email=($4) RETURNING *',
-    [req.body.firstname, req.body.lastname, req.body.phonenumber, req.params.email],
+  client.query('UPDATE udata SET firstname=COALESCE($1,firstname), lastname=COALESCE($2,lastname), phonenumber=COALESCE($3,phonenumber),trafficalert=COALESCE($4,trafficalert), weatheralert=COALESCE($5,weatheralert), eventalert=COALESCE($6,eventalert), transitalert=COALESCE($7,transitalert) WHERE email=($8) RETURNING *',
+    [req.body.firstname, 
+      req.body.lastname, 
+      req.body.phonenumber, 
+      req.body.trafficalert,
+      req.body.weatheralert,
+      req.body.eventalert,
+      req.body.transitalert,
+      req.params.email],
     function (err, result) {
       if (err) {
         console.error(err);
@@ -110,55 +121,31 @@ app.put("/udata/:email", async (req, res) => {
       }
     });
 });
-//----------- User Notification Preferences ------------
-app.get('/notifications/:email', async (req, res) => {
 
-  const client = await pool.connect();
+// //----------- Set Notification Preferences --------------
+// app.put('/notifications/:email', async (req, res) => {
 
-  client.query('SELECT udata.trafficalert, udata.weatheralert, udata.eventalert, udata.transitalert, udata.uid, udata.email FROM udata WHERE email=$1;',
-    [req.params.email], function (err, result) {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Server error");
-        client.release();
-      } if (result.rowCount === 0) {
-        res.status(404).send("Notification preferences not found");
-        client.release;
-      }
-      else {
-        client.release();
-        res.status(200).json(result.rows);
-      }
-    });
-});
+//   const client = await pool.connect();
 
-//----------- Set Notification Preferences --------------
-app.put('/notifications/:email', async (req, res) => {
+  
 
-  const client = await pool.connect();
-
-  req.body.trafficalert = emptyToNull(req.body.trafficalert);
-  req.body.weatheralert = emptyToNull(req.body.weatheralert);
-  req.body.eventalert = emptyToNull(req.body.eventalert);
-  req.body.transitalert = emptyToNull(req.body.transitalert);
-
-  client.query('UPDATE udata SET trafficalert=COALESCE($1,trafficalert), weatheralert=COALESCE($2,weatheralert), eventalert=COALESCE($3,eventalert), transitalert=COALESCE($4,transitalert) WHERE email=($5) RETURNING *',
-    [req.body.trafficalert,
-    req.body.weatheralert,
-    req.body.eventalert,
-    req.body.transitalert,
-    req.params.email],
-    function (err, result) {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Server error: " + err);
-        client.release();
-      } else {
-        res.status(201).json(result.rows[0]);
-        client.release();
-      }
-    });
-});
+//   client.query('UPDATE udata SET trafficalert=COALESCE($1,trafficalert), weatheralert=COALESCE($2,weatheralert), eventalert=COALESCE($3,eventalert), transitalert=COALESCE($4,transitalert) WHERE email=($5) RETURNING *',
+//     [req.body.trafficalert,
+//     req.body.weatheralert,
+//     req.body.eventalert,
+//     req.body.transitalert,
+//     req.params.email],
+//     function (err, result) {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).send("Server error: " + err);
+//         client.release();
+//       } else {
+//         res.status(201).json(result.rows[0]);
+//         client.release();
+//       }
+//     });
+// });
 
 //----------- Get User Destination -----------
 app.get('/destinations/:email', async (req, res) => {
