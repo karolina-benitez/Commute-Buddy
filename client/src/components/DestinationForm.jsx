@@ -153,9 +153,6 @@ class DestinationForm extends Component {
           </Form.Group>
         </Form>
 
-        <Autocomplete/>
-
-
         <RouteTable
           origin={this.state.origin}
           destination={this.state.destination}
@@ -163,7 +160,7 @@ class DestinationForm extends Component {
           userRequestedRoutes={this.state.userRequestedRoutes}
         />
 
-        <GoogleTripsTable 
+        <GoogleTripsTable
           origin={this.state.origin}
           destination={this.state.destination}
           arrivedate={this.state.arrivedate}

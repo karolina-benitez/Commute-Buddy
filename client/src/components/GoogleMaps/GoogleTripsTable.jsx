@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-/* global google */
-// const API = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
 const google = window.google;
+/* global google */
 
 
-const AutocompleteDirectionsHandler = (map) => {
+function AutocompleteDirectionsHandler(map) {
   this.map = map;
   this.originPlaceId = null;
   this.destinationPlaceId = null;
   this.travelMode = 'WALKING';
-  this.directionsService = new google.maps.DirectionsService;
-  this.directionsDisplay = new google.maps.DirectionsRenderer;
+  this.directionsService = new google.maps.DirectionsService();
+  this.directionsDisplay = new google.maps.DirectionsRenderer();
   this.directionsDisplay.setMap(map);
 
   var originInput = document.getElementById('origin-input');
@@ -39,7 +38,7 @@ const AutocompleteDirectionsHandler = (map) => {
   this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
 }
 
-AutocompleteDirectionsHandler.prototype.setupClickListener = (id, mode) => {
+AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
   var radioButton = document.getElementById(id);
   var me = this;
 
@@ -49,7 +48,7 @@ AutocompleteDirectionsHandler.prototype.setupClickListener = (id, mode) => {
   });
 };
 
-AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = (autocomplete, mode) => {
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
   var me = this;
   autocomplete.bindTo('bounds', this.map);
 
@@ -68,7 +67,7 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = (autocomplet
     me.route();
   });
 };
-AutocompleteDirectionsHandler.prototype.route = () => {
+AutocompleteDirectionsHandler.prototype.route = function () {
   if (!this.originPlaceId || !this.destinationPlaceId) {
     return;
   }
@@ -135,35 +134,35 @@ export class GoogleTripsTable extends Component {
         center: { lat: 37.7749, lng: -122.4194 },
         zoom: 14
       });
-
+      this.directionsHandler = new AutocompleteDirectionsHandler(map)
     });
-    this.directionsHandler = new AutocompleteDirectionsHandler(this.map)
   }
 
   render() {
 
     return (
       <div>
-        <div>
-          {/* <div style={{ display: 'none' }}> */}
-          <input id="origin-input" className="controls" type="text"
-            placeholder="Enter an origin location" />
+        <div >
+          <div style={{ display: 'none' }}>
+            <input id="origin-input" className="controls" type="text"
+              placeholder="Enter an origin location" />
 
-          <input id="destination-input" className="controls" type="text"
-            placeholder="Enter a destination location" />
+            <input id="destination-input" className="controls" type="text"
+              placeholder="Enter a destination location" />
 
-          <div id="mode-selector" className="controls">
-            <input type="radio" name="type" id="changemode-walking" checked="checked" />
-            <label htmlFor="changemode-walking">Walking</label>
+            <div id="mode-selector" className="controls">
+              <input type="radio" name="type" id="changemode-walking" checked="checked" />
+              <label htmlFor="changemode-walking">Walking</label>
 
-            <input type="radio" name="type" id="changemode-transit" />
-            <label htmlFor="changemode-transit">Transit</label>
+              <input type="radio" name="type" id="changemode-transit" />
+              <label htmlFor="changemode-transit">Transit</label>
 
-            <input type="radio" name="type" id="changemode-driving" />
-            <label htmlFor="changemode-driving">Driving</label>
+              <input type="radio" name="type" id="changemode-driving" />
+              <label htmlFor="changemode-driving">Driving</label>
+            </div>
           </div>
+          <div id="map" style={{ width: '100%', height: 600, border: 'none' }}></div>
         </div>
-        <div id="map" style={{ width: '100%', height: 600 }}></div>
       </div>
     );
   }
