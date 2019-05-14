@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import { Button, Form } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
+import AddressContainer from '../components/AddressContainer';
 
 class UserSettings extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class UserSettings extends Component {
     }
   }
   handleTraffic = (e) => {
-    console.log('handletraffic')
     this.setState({
       trafficalert: !this.state.trafficalert
     });
@@ -40,20 +40,19 @@ class UserSettings extends Component {
       transitalert: !this.state.transitalert
     });
   }
-  submitHandler = (e) => {
 
+  handleNewUser = (uid, firstname, lastname, phonenumber, email, trafficalert, eventalert, weatheralert, transitalert) => {
     const data = {
-      uid: this.props.isAuth.uid,
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      phonenumber: this.state.phonenumber,
-      email: this.props.isAuth.email,
-      trafficalert: this.state.trafficalert,
-      eventalert: this.state.eventalert,
-      weatheralert: this.state.weatheralert,
-      transitalert: this.state.transitalert,
+      uid,
+      firstname,
+      lastname,
+      phonenumber,
+      email,
+      trafficalert,
+      eventalert,
+      weatheralert,
+      transitalert
     }
-    e.preventDefault()
     fetch(`/newUser`, {
       method: "POST",
       headers: {
@@ -63,12 +62,60 @@ class UserSettings extends Component {
     })
       .then((result) => result.json())
       .then((info) => { console.log(info); })
-    console.log(this.state)
   }
 
+  handleEditUser = (firstname, lastname, phonenumber, email, trafficalert, eventalert, weatheralert, transitalert) => {
+    const data = {
+      firstname,
+      lastname,
+      phonenumber,
+      email,
+      trafficalert,
+      eventalert,
+      weatheralert,
+      transitalert
+    }
+
+    fetch(`/udata/${email}`, {
+      method: "PUT",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then((result) => result.json())
+      .then((info) => { console.log(info); })
+  }
+
+  submitHandler = (e) => {
+    e.preventDefault()
+    if (this.props.userdata[0].email === this.props.isAuth.email) {
+      this.handleEditUser(
+        this.state.firstname,
+        this.state.lastname,
+        this.state.phonenumber,
+        this.state.email,
+        this.state.trafficalert,
+        this.state.eventalert,
+        this.state.weatheralert,
+        this.state.transitalert,
+      );
+    } else {
+      this.handleNewUser(
+        this.props.isAuth.uid,
+        this.state.firstname,
+        this.state.lastname,
+        this.state.phonenumber,
+        this.props.isAuth.email,
+        this.state.trafficalert,
+        this.state.eventalert,
+        this.state.weatheralert,
+        this.state.transitalert,
+      );
+    }
+  }
   //~~~~~~ form state~~~~~~~~~
   render() {
-
     const userdata = this.props.userdata
     return (
       <div className="userSettings">
@@ -132,6 +179,10 @@ class UserSettings extends Component {
             Submit
           </Button>
         </Form>
+        <AddressContainer 
+          isAuth={this.props.isAuth}
+          userdata={this.props.userdata}
+        />
         <Button variant="link" href='main'>
           Back to Settings
         </Button>

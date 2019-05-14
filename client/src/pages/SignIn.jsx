@@ -10,12 +10,12 @@ class SignIn extends React.Component {
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.signup = this.signup.bind(this);
-
     this.state = {
       email: '',
       password: ''
     }
   }
+
   login(e) {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
@@ -23,15 +23,32 @@ class SignIn extends React.Component {
       console.log(error);
     });
   }
+
   signup(e) {
     e.preventDefault();
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
       console.log(error);
     });
   }
+
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
+  // handleNewUser = (email) => {
+  //   const data = {
+  //     email
+  //   }
+  //   fetch(`/newUser`, {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-type': 'application/json'
+  //     },
+  //     body: JSON.stringify(data)
+  //   })
+  //     .then((result) => result.json())
+  //     .then((info) => { console.log(info); })
+  // }
 
   render() {
     return (

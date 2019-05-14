@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Form, Col, Row, Dropdown, Button } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import GoogleTripsTable from './GoogleMaps/GoogleTripsTable'
+
+import RouteTable from './RouteTable';
+import Autocomplete from './GoogleMaps/Autocomplete';
 
 class DestinationForm extends Component {
   constructor(props) {
@@ -12,9 +16,11 @@ class DestinationForm extends Component {
       arrivedate: new Date(),
       newuserdata: this.props.userdata,
       isLoaded: false,
-      googleAPI: []
+      googleAPI: [],
+      userRequestedRoutes: false
     }
   }
+
   //~~~~~~ Change data state ~~~~~~~~~~~~~
   handleOrigin = (event) => {
     this.setState({
@@ -44,6 +50,16 @@ class DestinationForm extends Component {
     })
   }
 
+  buttonWasClicked() {
+    console.log('button was clicked')
+    console.log(this.state.origin)
+    console.log(this.state.destination)
+  }
+
+  handleSelectButton = () => {
+    this.buttonWasClicked()
+  }
+
   render() {
     let userdata = this.props.userdata
 
@@ -66,7 +82,6 @@ class DestinationForm extends Component {
         {useraddress.address}
       </Dropdown.Item>
     )
-    console.log(this.handleArriveDate)
 
     return (
       <div className="destinationForm">
@@ -80,14 +95,14 @@ class DestinationForm extends Component {
               <Form.Control
                 type="text"
                 placeholder="Address"
-                defaultValue={this.state.origin || ''}
+                // defaultValue={this.state.origin || ''}
                 onChange={this.handleOrigin}
                 value={this.state.origin} />
             </Col>
             <Col sm={2}>
               <Dropdown>
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
-                  Your Destinations
+                  Your Addresses
                   </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {useraddresses}
@@ -104,14 +119,14 @@ class DestinationForm extends Component {
               <Form.Control
                 type="text"
                 placeholder="Address"
-                defaultValue={this.state.destination || ''}
+                // defaultValue={this.state.destination || ''}
                 onChange={this.handleDestination}
                 value={this.state.destination} />
             </Col>
             <Col sm={2}>
               <Dropdown>
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
-                  Your Destinations
+                  Your Addresses
                   </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {useraddresses2}
@@ -132,16 +147,29 @@ class DestinationForm extends Component {
               />
             </Col>
             <Col sm={1}>
-              <Button variant="light"> Select </Button>
+              <Button variant="light"
+                onClick={() => { this.handleSelectButton() }}> Select </Button>
             </Col>
           </Form.Group>
         </Form>
-        <Button
-          variant="link"
-          className='button'
-          href='/selection'>
-          Select Route
-        </Button>
+
+        <Autocomplete/>
+
+
+        <RouteTable
+          origin={this.state.origin}
+          destination={this.state.destination}
+          arrivedate={this.state.arrivedate}
+          userRequestedRoutes={this.state.userRequestedRoutes}
+        />
+
+        <GoogleTripsTable 
+          origin={this.state.origin}
+          destination={this.state.destination}
+          arrivedate={this.state.arrivedate}
+          userRequestedRoutes={this.state.userRequestedRoutes}
+        />
+
       </div>
     );
   }

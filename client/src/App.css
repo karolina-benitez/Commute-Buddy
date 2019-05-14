@@ -21,22 +21,20 @@ html, body, .App, .Home{
 }
 .navMain {
   font-family: 'Cuprum', sans-serif;  
-  font-size: 32px;
+  font-size: 3rem;
   /* border: 3px solid red; */
   /* background-color: #aca9a4; */
-  padding: 0 10rem 0 0;
-  margin: 10px;
-
+  /* margin: 10px;
+  margin-right: 300px */
 }
 .navLink{
   color: black;
   padding: 10px;
-  font-size: 16px;
+  font-size: 2rem;
 }
 .navgreet{
   color: #285128;
-  padding: 10px;
-  font-size: 16px;
+  font-size: 1.5rem;
 }
 /* .headerMain{
   font-family: 'Cuprum', sans-serif;  
@@ -85,7 +83,6 @@ font-weight: 200 ;
   border: 3px solid red;
 }
 .userSettings, .about {
-  width: 50%;
   /* text-align: center; */
   margin: auto;
 }

@@ -40,7 +40,8 @@ class App extends Component {
       userdata: []
     };
   }
-//~~~~~~~~~~~~~~ User Authentication~~~~~~~~~~~~~~~~~~~~~~~~
+
+  //~~~~~~~~~~~~~~ User Authentication~~~~~~~~~~~~~~~~~~~~~~~~
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user)
@@ -55,58 +56,57 @@ class App extends Component {
   componentDidMount() {
     this.authListener();
   }
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //**********************************************************/
 
-//~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
 
-handleEditUser = (email, firstname, lastname, phonenumber, trafficalert, weatheralert, eventalert, transitalert) => {
-
-  const user = {
-    firstname,
-    lastname,
-    phonenumber,
-    trafficalert, 
-    weatheralert,
-    eventalert,
-    transitalert, 
-  }
-  
-  fetch(`/notifications/${email}`, {
-    method: 'put',
-    body: JSON.stringify(user),
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then(res => res.json())
-    .then(newEvent => {
-      const events = this.state.events.map(event => {
-        return (parseInt(event.id) === parseInt(newEvent.id)) ? newEvent : event;
-      });
-      this.setState({ events });
+  handleEditUser = (email, firstname, lastname, phonenumber, trafficalert, weatheralert, eventalert, transitalert) => {
+    const user = {
+      firstname,
+      lastname,
+      phonenumber,
+      trafficalert,
+      weatheralert,
+      eventalert,
+      transitalert,
+    }
+    fetch(`/notifications/${email}`, {
+      method: 'put',
+      body: JSON.stringify(user),
+      headers: { 'Content-Type': 'application/json' }
     })
-};
+      .then(res => res.json())
+      .then(newEvent => {
+        const events = this.state.events.map(event => {
+          return (parseInt(event.id) === parseInt(newEvent.id)) ? newEvent : event;
+        });
+        this.setState({ events });//TODO: update variables to user
+      })
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
+  };
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
 
-//~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~ Update User Info ~~~~~~~~~~~~~~~~~~~~~~~~
 
-//~~~~~~~~~~~~~~ 'Get' User data from DB ~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  // ~~~~~~~~~~~~~~ 'Get' User data from DB ~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidUpdate(prevProps, prevState) {
     console.log(this.state.user)
     if (this.state.user) {
       if (!prevState.isLoaded) {
-        console.log(this.state.user.email)
+        // console.log(this.state.user.email)
         let userID = this.state.user.email
         console.log(userID)
         fetch(`/udata/${userID}`)
           .then(res => res.json())
           .then(
             (result) => {
-              console.log(userID)
+              // console.log(userID)
               console.log(result)
               console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
               this.setState({
@@ -125,18 +125,17 @@ handleEditUser = (email, firstname, lastname, phonenumber, trafficalert, weather
     }
   }
 
-
   render() {
-    console.log(this.state.user)
-    console.log(this.state.userdata)
+    // console.log(this.state.user)
+    // console.log(this.state.userdata)
     const { error, userdata, isLoaded } = this.state;
-    console.log(userdata)
+    // console.log(userdata)
     if (error) {
       return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>
-        Loooooooooaddddding
-        </div>
+      // } else if (!isLoaded) {
+      //   return <div>
+      //     Loooooooooaddddding
+      //     </div>
     } else {
       return (
         <div className="App">
