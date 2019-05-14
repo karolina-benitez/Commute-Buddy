@@ -3,11 +3,6 @@ import React, { Component } from 'react';
 // const API = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
 const google = window.google;
 
-const mapStyle = {
-  height: '700px'
-};
-
-
 export class GoogleTripsTable extends Component {
   constructor(props) {
     super(props)
@@ -139,11 +134,11 @@ export class GoogleTripsTable extends Component {
       const map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         center: { lat: 37.7749, lng: -122.4194 },
-        zoom: 13
+        zoom: 14
       });
 
     });
-    // new this.AutocompleteDirectionsHandler(map)
+    new this.AutocompleteDirectionsHandler(map)
   }
 
   render() {
@@ -169,112 +164,10 @@ export class GoogleTripsTable extends Component {
             <label htmlFor="changemode-driving">Driving</label>
           </div>
         </div>
-        <div id="map" style={{ width: 900, height: 300 }}></div>
+        <div id="map" style={{ width: '100%', height: 600 }}></div>
       </div>
     );
   }
 }
 
-// ReactDOM.render(
-//   <ContactBody />,
-//   document.getElementById('react')
-// );
-
 export default GoogleTripsTable
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { Component } from 'react';
-// /* global google */
-// // const API = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
-// const google = window.google;
-
-// const mapStyle = {
-//   height: '700px',
-//   borderColor: 'black'
-// };
-
-// export class GoogleTripsTable extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       origin: this.props.origin,
-//       destination: this.props.destination,
-//       arrivedate: new Date(),
-//       newuserdata: this.props.userdata,
-//       userRequestedRoutes: false
-//     }
-//   }
-
-//   getGoogleMaps() {
-//     if (!this.googleMapsPromise) {
-//       this.googleMapsPromise = new Promise((resolve) => {
-//         window.resolveGoogleMapsPromise = () => {
-//           resolve(google);
-//           delete window.resolveGoogleMapsPromise;
-//         };
-//         const script = document.createElement("script");
-//         const API = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
-//         script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&callback=resolveGoogleMapsPromise`;
-//         script.async = true;
-//         document.body.appendChild(script);
-//       });
-//     }
-
-//     // Return a promise for the Google Maps API
-//     return this.googleMapsPromise;
-//   }
-
-//   componentWillMount() {
-//     // Start Google Maps API loading since we know we'll soon need it
-//     this.getGoogleMaps();
-//   }
-
-//   componentDidMount() {
-//     // Once the Google Maps API has finished loading, initialize the map
-//     this.getGoogleMaps().then((google) => {
-//       const destination = { lat: 37.7749, lng: -122.4194 }
-//       //{ lat: 37.7749, lng: -122.4194 };
-//       const map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 12,
-//         center: destination
-//       });
-//       const marker = new google.maps.Marker({
-//         position: destination,
-//         map: map
-//       });
-
-//     });
-//   }
-
-//   render() {
-
-//     return (
-//       <div>
-//         <div id="map" style={{ width: 900, height: 300 }}></div>
-
-//       </div>
-
-//     );
-//   }
-// }
-
-// // ReactDOM.render(
-// //   <ContactBody />,
-// //   document.getElementById('react')
-// // );
-
-// export default GoogleTripsTable  
