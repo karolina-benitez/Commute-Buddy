@@ -39,7 +39,7 @@ export class GoogleTripsTable extends Component {
     return this.googleMapsPromise;
   }
 
-AutocompleteDirectionsHandler(map) {
+  AutocompleteDirectionsHandler(map) {
     this.map = map;
     this.originPlaceId = null;
     this.destinationPlaceId = null;
@@ -74,55 +74,55 @@ AutocompleteDirectionsHandler(map) {
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
   }
 
-//   AutocompleteDirectionsHandler.prototype.setupClickListener(id, mode) {
-//     var radioButton = document.getElementById(id);
-//     var me = this;
+  AutocompleteDirectionsHandler.prototype.setupClickListener(id, mode) {
+    var radioButton = document.getElementById(id);
+    var me = this;
 
-//     radioButton.addEventListener('click', function () {
-//       me.travelMode = mode;
-//       me.route();
-//     });
-//   };
+    radioButton.addEventListener('click', function () {
+      me.travelMode = mode;
+      me.route();
+    });
+  };
 
-//   AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener(autocomplete, mode) {
-//   var me = this;
-//   autocomplete.bindTo('bounds', this.map);
+  AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener(autocomplete, mode) {
+    var me = this;
+    autocomplete.bindTo('bounds', this.map);
 
-//   autocomplete.addListener('place_changed', function() {
-//     var place = autocomplete.getPlace();
+    autocomplete.addListener('place_changed', function () {
+      var place = autocomplete.getPlace();
 
-//     if (!place.place_id) {
-//       window.alert('Please select an option from the dropdown list.');
-//       return;
-//     }
-//     if (mode === 'ORIG') {
-//       me.originPlaceId = place.place_id;
-//     } else {
-//       me.destinationPlaceId = place.place_id;
-//     }
-//     me.route();
-//   });
-// };
-// AutocompleteDirectionsHandler.prototype.route = function() {
-//   if (!this.originPlaceId || !this.destinationPlaceId) {
-//     return;
-//   }
-//   var me = this;
+      if (!place.place_id) {
+        window.alert('Please select an option from the dropdown list.');
+        return;
+      }
+      if (mode === 'ORIG') {
+        me.originPlaceId = place.place_id;
+      } else {
+        me.destinationPlaceId = place.place_id;
+      }
+      me.route();
+    });
+  };
+  AutocompleteDirectionsHandler.prototype.route = function () {
+    if (!this.originPlaceId || !this.destinationPlaceId) {
+      return;
+    }
+    var me = this;
 
-//   this.directionsService.route(
-//       {
-//         origin: {'placeId': this.originPlaceId},
-//         destination: {'placeId': this.destinationPlaceId},
-//         travelMode: this.travelMode
-//       },
-//       function(response, status) {
-//         if (status === 'OK') {
-//           me.directionsDisplay.setDirections(response);
-//         } else {
-//           window.alert('Directions request failed due to ' + status);
-//         }
-//       });
-// };
+    this.directionsService.route(
+      {
+        origin: { 'placeId': this.originPlaceId },
+        destination: { 'placeId': this.destinationPlaceId },
+        travelMode: this.travelMode
+      },
+      function (response, status) {
+        if (status === 'OK') {
+          me.directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+  };
 
 
 
