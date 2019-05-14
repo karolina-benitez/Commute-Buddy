@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 const google = window.google;
 
 
-AutocompleteDirectionsHandler = (map) => {
+const AutocompleteDirectionsHandler = (map) => {
   this.map = map;
   this.originPlaceId = null;
   this.destinationPlaceId = null;
@@ -137,7 +137,7 @@ export class GoogleTripsTable extends Component {
       });
 
     });
-    this.directionsHandler = new AutocompleteDirectionsHandler(map)
+    this.directionsHandler = new AutocompleteDirectionsHandler(this.map)
   }
 
   render() {
