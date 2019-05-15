@@ -4,9 +4,13 @@ Tired of having to check multiple sources each morning in preparation for you co
 
 ## Data
 
-### * [Google Maps JavascriptAPI](https://developers.google.com/maps/documentation/javascript/tutorial)
+###[Google Maps JavascriptAPI](https://developers.google.com/maps/documentation/javascript/tutorial)
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+> The Maps JavaScript API lets you customize maps with your own content and imagery for display on web pages and mobile devices. The Maps JavaScript API features four basic map types (roadmap, satellite, hybrid, and terrain) which you can modify using layers and styles, controls and events, and various services and libraries.
+
+###[Twilio SMS](https://www.twilio.com/docs/sms)
+
+> Text messaging. SMS. Use the Twilio API for SMS to send and receive text messages over the carrier network to any phone, anywhere in the world. From a Twilio phone number, SMS messages are delivered globally.
 
 ## Getting Started
 
