@@ -35,41 +35,25 @@ class SignIn extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  // handleNewUser = (email) => {
-  //   const data = {
-  //     email
-  //   }
-  //   fetch(`/newUser`, {
-  //     method: "POST",
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   })
-  //     .then((result) => result.json())
-  //     .then((info) => { console.log(info); })
-  // }
-
   render() {
     return (
-      <div>
+      <div className='signIn'>
         <NonAuthNavBar />
-        <h3 className='header3'>Sign in</h3>
-        <div className='col-md-6'>
+        <div className='signInContent'>
+          <div className='form-group'>
+            <label for='exampleInputEmail'>Email Address</label>
+            <input value={this.state.email} onChange={this.handleChange} type="email" name='email' className='form-control' id='exampleInputEmail' aria-describedby='emailHelp' placeholder='Enter Email' />
+          </div>
           <div>
-            <div className='form-group'>
-              <label for='exampleInputEmail'>Email Address</label>
-              <input value={this.state.email} onChange={this.handleChange} type="email" name='email' className='form-control' id='exampleInputEmail' aria-describedby='emailHelp' placeholder='Enter Email' />
-            </div>
-            <div>
-              <label for='exampleInputPassword1'>Password</label>
-              <input value={this.state.password} onChange={this.handleChange} type="password" name='password' className='form-control' id='exampleInputPassword' aria-describedby='emailHelp' placeholder='Password' />
-            </div>
+            <label for='exampleInputPassword1'>Password</label>
+            <input value={this.state.password} onChange={this.handleChange} type="password" name='password' className='form-control' id='exampleInputPassword' aria-describedby='emailHelp' placeholder='Password' />
+          </div>
+          <div class='signInButton'>
             <Link href='/main'
               onClick={this.logout} className='navLink'>
-              <button type='submit' onClick={this.login} className='btn btn-primary' >Login</button>
+              <button type='submit' onClick={this.login} className='btn  button' >Login</button>
             </Link>
-            <button onClick={this.signup} style={{ marginLeft: '25px' }} className='btn btn-success'>Sign Up</button>
+            <button onClick={this.signup} style={{ marginLeft: '25px' }} className='btn  button'>Sign Up</button>
           </div>
         </div>
       </div>

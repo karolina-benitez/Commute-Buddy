@@ -128,7 +128,7 @@ class App extends Component {
   render() {
     // console.log(this.state.user)
     // console.log(this.state.userdata)
-    const { error, userdata, isLoaded } = this.state;
+    const { error /*, userdata, isLoaded */ } = this.state;
     // console.log(userdata)
     if (error) {
       return <div>Error: {error.message}</div>;

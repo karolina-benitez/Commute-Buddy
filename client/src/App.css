@@ -7,8 +7,41 @@ html, body, .App, .Home{
   font-family: 'Open Sans', sans-serif;
 }
 .Home {
-  background-image: url("https://images.unsplash.com/photo-1495379572396-5f27a279ee91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80") !important;
+  background-image: url("https://images.unsplash.com/photo-1490555057042-39428536226a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80") !important;
   background-size: cover;
+}
+.signIn {
+  background-image: url("https://images.unsplash.com/photo-1490555057042-39428536226a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+.signInContent {
+  background-color: rgba(219, 219, 219, 0.98);
+  padding: 2%;
+  margin-top: 10%;
+  margin-left:auto;
+  margin-right:auto;
+  width:40%;
+  box-shadow: 0 8px 16px 0 rgba(243, 242, 242, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.562);
+} 
+.signInButton button{
+  margin-top: 3%;
+  border-color: grey;
+  box-shadow: 0 8px 10px 0 rgba(243, 242, 242, 0.6), 0 6px 8px 0 rgba(0, 0, 0, 0.562);
+
+}
+.signInContent input{
+  margin-top: 3%;
+  border-color: grey;
+  box-shadow: 0 8px 10px 0 rgba(243, 242, 242, 0.6), 0 6px 8px 0 rgba(0, 0, 0, 0.562);
+
+}
+.signInButton button:hover{
+  margin-top: 3%;
+  box-shadow: 0 8px 16px 0 rgb(250, 250, 250), 0 12px 20px 0 rgba(0, 0, 0, 0.562);
+
 }
 .App-header {
   background-color: #f6f2eb;
@@ -33,8 +66,14 @@ html, body, .App, .Home{
   font-size: 2rem;
 }
 .navgreet{
-  color: #285128;
   font-size: 1.5rem;
+  color: #285128;
+}
+.nonAuthNav {
+  background-color: rgb(250, 250, 250, 0.85)
+}
+.signInHamburgerNav Navbar.Toggle{
+  border: 2px solid red;
 }
 /* .headerMain{
   font-family: 'Cuprum', sans-serif;  
@@ -53,12 +92,23 @@ html, body, .App, .Home{
   bottom:50px;
   right:0;
 }
-.button {
+.button  {
   width: 40%;
   height: 40;
-  background-color: #aca9a4;
+  background-color: white;
   color: black;
   text-align: center;
+  box-shadow: 0 8px 16px 0 rgba(243, 242, 242, 0.472), 0 6px 20px 0 rgba(253, 253, 253, 0.623);
+
+}
+.button:hover  {
+  width: 40%;
+  height: 40;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border: none;
+  box-shadow: 0 12px 16px 0 rgba(241, 103, 11, 0.438), 0 17px 50px 0 rgba(0,0,0,0.19)
 }
 .formContainer {
 
@@ -107,12 +157,7 @@ font-weight: 200 ;
   background-color: #3b5998;
   color: white;
 }
-/********fonts************
-font-family: 'Cuprum', sans-serif;
-font-family: 'Open Sans', sans-serif;
-*/
 
-/* use border check className to troubleshoot */
 .borderCheck {
   border: 3px solid green;
 }
@@ -122,3 +167,42 @@ font-family: 'Open Sans', sans-serif;
   /* align-items: center;
   justify-content: center; */
 }
+
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-2%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes shrink {
+  0% {
+    width: 95%;
+  }
+  100% {
+    width: 90%;
+  }
+}
+
+
+
+/********fonts************
+font-family: 'Cuprum', sans-serif;
+font-family: 'Open Sans', sans-serif;
+*/
+
+/* use border check className to troubleshoot */

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import fire from '../config/Fire';
 
 const navStyle = {
@@ -17,18 +17,18 @@ class NavBar extends React.Component {
     fire.auth().signOut();
   }
   render() {
-    const userdata = this.props.userdata
+    // const userdata = this.props.userdata
     return (
-      <div className='App-header' className='navMain' style={navStyle}>
+      <div className='App-header navMain' style={navStyle}>
         {/* <Container> */}
-        <Navbar expand="lg" fixed="top" style={{ backgroundColor: '#aca9a4' }} >
-          <Navbar.Brand className='navMain'>Commute Buddy</Navbar.Brand>
-          <Nav className="mr-sm-2">
-            <Link to='/main' className='navLink'> Home </Link>
-            <Link to='/selection' className='navLink'>Routes </Link>
-            <Link to='/usersettings' className='navLink'>Settings </Link>
+        <Navbar expand="lg" fixed="top" style={{ backgroundColor: '#285128' }} >
+          <Navbar.Brand className='navMain' style={{ color: 'white' }}>Commute Buddy</Navbar.Brand>
+          <Nav className="mr-sm-2" >
+            <Link to='/main' className='navLink' style={{ color: 'white' }}> Home </Link>
+            <Link to='/selection' className='navLink' style={{ color: 'white' }}>Routes </Link>
+            <Link to='/usersettings' className='navLink' style={{ color: 'white' }}>Settings </Link>
             <Link to='/'
-              onClick={this.logout} className='navLink'>Sign Out</Link>
+              onClick={this.logout} className='navLink' style={{ color: 'white' }}>Sign Out</Link>
             {/* <div className='navgreet'>Welcome back {userdata[0].firstname}!</div> */}
           </Nav>
         </Navbar>

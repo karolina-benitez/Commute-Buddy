@@ -2,17 +2,121 @@ import React, { Component } from 'react';
 import { Form, Col, Row, Dropdown, Button } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import GoogleTripsTable from './GoogleMaps/GoogleTripsTable'
+// import GoogleTripsTable from './GoogleMaps/GoogleTripsTable'
+// import RouteTable from './RouteTable';
+// import Autocomplete from './GoogleMaps/Autocomplete';
+const google = window.google;
 
-import RouteTable from './RouteTable';
-import Autocomplete from './GoogleMaps/Autocomplete';
+function AutocompleteDirectionsHandler(map) {
+  this.map = map;
+  this.originPlaceId = null;
+  this.destinationPlaceId = null;
+
+  this.travelMode = 'WALKING';
+  this.traffic_model = 'best_guess'; //TODO: check if works
+  this.directionsService = new google.maps.DirectionsService();
+  this.directionsDisplay = new google.maps.DirectionsRenderer();
+  this.directionsDisplay.setMap(map);
+
+  var originInput = document.getElementById('origin-input');
+  var destinationInput = document.getElementById('destination-input');
+  var modeSelector = document.getElementById('mode-selector');
+  // var arrivalSelector = document.getElementById('arrival-selector')
+
+  var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+  // Specify just the place data fields that you need.
+  originAutocomplete.setFields(['place_id']);
+
+  var destinationAutocomplete =
+    new google.maps.places.Autocomplete(destinationInput);
+  // Specify just the place data fields that you need.
+  destinationAutocomplete.setFields(['place_id']);
+
+  this.setupClickListener('changemode-walking', 'WALKING');
+  this.setupClickListener('changemode-transit', 'TRANSIT');
+  this.setupClickListener('changemode-driving', 'DRIVING');
+
+  this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+  this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+  this.map.controls.push(originInput);
+  this.map.controls.push(
+    destinationInput);
+  this.map.controls.push(modeSelector);
+  console.log(this.response)
+  // console.log(this.response.routes[0].legs[0].duration.text)
+  // console.log(this.response.routes[0].legs[0].distance.text)
+  //console.log(this.response.routes[0].fare.text)
+  //console.log(this.response.routes[0].legs[0].arrivalTime)
+  // console.log(this.response.request.origin.travelMode)
+}
+
+AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
+  var radioButton = document.getElementById(id);
+  var me = this;
+
+  radioButton.addEventListener('click', function () {
+    me.travelMode = mode;
+    me.route();
+  });
+};
+
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
+  var me = this;
+  autocomplete.bindTo('bounds', this.map);
+  autocomplete.addListener('place_changed', function () {
+    var place = autocomplete.getPlace();
+    if (!place.place_id) {
+      window.alert('Please select an option from the dropdown list.');
+      return;
+    }
+    if (mode === 'ORIG') {
+      me.originPlaceId = place.place_id;
+    } else {
+      me.destinationPlaceId = place.place_id;
+    }
+    me.route();
+  });
+};
+
+AutocompleteDirectionsHandler.prototype.route = function () {
+  if (!this.originPlaceId || !this.destinationPlaceId) {
+    return;
+  }
+  var me = this;
+
+  this.directionsService.route(
+    {
+      origin: { 'placeId': this.originPlaceId },
+      destination: { 'placeId': this.destinationPlaceId },
+      travelMode: this.travelMode,
+      //arrival_time: this.arrival_time
+      // transitOptions: this.transitOptions TODO: how to print transit option results
+      // arrivalTime: this.state.arrivedate //TODO: will this work?
+      // arrivalTime: transitOptions.arrivalTime
+    },
+    function (response, status) {
+      if (status === 'OK') {
+        me.directionsDisplay.setDirections(response);
+        console.log(this.response)
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  console.log(this.response)
+  // console.log(this.response.routes[0].legs[0].duration.text)
+  // console.log(this.response.routes[0].legs[0].distance.text)
+  // console.log(this.response.routes[0].fare.text)
+  // console.log(this.response.routes[0].legs[0].arrivalTime)
+  // console.log(this.response.request.origin.travelMode)
+};
 
 class DestinationForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      origin: '',
-      destination: '',
+      origin: this.originPlaceId,
+      destination: this.destinationInput,
       arrivedate: new Date(),
       newuserdata: this.props.userdata,
       isLoaded: false,
@@ -60,10 +164,50 @@ class DestinationForm extends Component {
     this.buttonWasClicked()
   }
 
+  getGoogleMaps() {
+    if (!this.googleMapsPromise) {
+      this.googleMapsPromise = new Promise((resolve) => {
+        window.resolveGoogleMapsPromise = () => {
+          resolve(google);
+          delete window.resolveGoogleMapsPromise;
+        };
+        const script = document.createElement("script");
+        const API = 'AIzaSyAhVWhFdizN56yFD2Wf7Q1O_cOZHofdab4';
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&libraries=places&callback=resolveGoogleMapsPromise`;
+        script.async = true;
+        document.body.appendChild(script);
+      });
+    }
+    // Return a promise for the Google Maps API
+    return this.googleMapsPromise;
+  }
+
+  componentWillMount() {
+    // Start Google Maps API loading since we know we'll soon need it
+    this.getGoogleMaps();
+  }
+
+  componentDidMount() {
+    // Once the Google Maps API has finished loading, initialize the map
+    this.getGoogleMaps().then((google) => {
+      // const destination = { lat: 37.7749, lng: -122.4194 }
+      //{ lat: 37.7749, lng: -122.4194 };
+      const map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeControl: false,
+        center: { lat: 37.7749, lng: -122.4194 },
+        zoom: 14
+      });
+      this.directionsHandler = new AutocompleteDirectionsHandler(map)
+    });
+  }
   render() {
     let userdata = this.props.userdata
-
-    //start address
+    console.log(this.response)
+    // console.log(this.response.routes[0].legs[0].duration.text)
+    // console.log(this.response.routes[0].legs[0].distance.text)
+    //console.log(this.response.routes[0].fare.text)
+    //console.log(this.response.routes[0].legs[0].arrivalTime)
+    // console.log(this.response.request.origin.travelMode)    //start address
     const useraddresses = this.state.newuserdata.map((useraddress) =>
       <Dropdown.Item
         onClick={() => { this.handleClick(useraddress) }}
@@ -86,54 +230,35 @@ class DestinationForm extends Component {
     return (
       <div className="destinationForm">
         <Form>
-          {/************* Start Address ***************/}
-          <Form.Group as={Row} controlId="formHorizontalPassword">
+          <Form.Group as={Row}>
             <Form.Label column sm={1}>
               Start Location
               </Form.Label>
             <Col sm={4}>
               <Form.Control
-                type="text"
-                placeholder="Address"
-                // defaultValue={this.state.origin || ''}
                 onChange={this.handleOrigin}
-                value={this.state.origin} />
+                value={this.originInput}
+                id="origin-input"
+                className="controls"
+                type="text"
+                placeholder="Enter an origin location" />
             </Col>
-            <Col sm={2}>
-              <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
-                  Your Addresses
-                  </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {useraddresses}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-          </Form.Group>
-          {/************* Destination ***************/}
-          <Form.Group as={Row} controlId="formHorizontalPassword">
             <Form.Label column sm={1}>
               Destination
               </Form.Label>
             <Col sm={4}>
               <Form.Control
-                type="text"
-                placeholder="Address"
-                // defaultValue={this.state.destination || ''}
                 onChange={this.handleDestination}
-                value={this.state.destination} />
+                value={this.destinationInput}
+                id='destination-input'
+                className="controls"
+                type="text"
+                placeholder="Enter destination address"
+              />
             </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
             <Col sm={2}>
-              <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
-                  Your Addresses
-                  </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {useraddresses2}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-            <Col sm={3}>
               <DatePicker
                 selected={this.state.arrivedate}
                 onChange={this.handleChange}
@@ -146,27 +271,44 @@ class DestinationForm extends Component {
                 value={this.state.arrivedate}
               />
             </Col>
-            <Col sm={1}>
-              <Button variant="light"
-                onClick={() => { this.handleSelectButton() }}> Select </Button>
+            <Col sm={3} >
+              <input type="radio" name="type" id="changemode-walking" checked="defaultChecked" style={{ marginRight: '16px' }} />
+              <label htmlFor="changemode-walking" style={{ marginRight: '16px' }}>Walking</label>
+
+              <input type="radio" name="type" id="changemode-transit" style={{ marginRight: '16px' }} />
+              <label htmlFor="changemode-transit" style={{ marginRight: '16px' }}>Transit</label>
+
+              <input type="radio" name="type" id="changemode-driving" style={{ marginRight: '16px' }} />
+              <label htmlFor="changemode-driving" style={{ marginRight: '16px' }}>Driving</label>
             </Col>
           </Form.Group>
         </Form>
 
-        <RouteTable
+        {/* <RouteTable
           origin={this.state.origin}
           destination={this.state.destination}
           arrivedate={this.state.arrivedate}
           userRequestedRoutes={this.state.userRequestedRoutes}
-        />
+        /> */}
+        <div>
+          <div >
+            <div style={{ display: 'none' }}>
+              <div id="mode-selector" className="controls">
+                <input type="radio" name="type" id="changemode-walking" checked="checked" />
+                <label htmlFor="changemode-walking">Walking</label>
 
-        <GoogleTripsTable
-          origin={this.state.origin}
-          destination={this.state.destination}
-          arrivedate={this.state.arrivedate}
-          userRequestedRoutes={this.state.userRequestedRoutes}
-        />
+                <input type="radio" name="type" id="changemode-transit" />
+                <label htmlFor="changemode-transit">Transit</label>
 
+                <input type="radio" name="type" id="changemode-driving" />
+                <label htmlFor="changemode-driving">Driving</label>
+              </div>
+            </div>
+            <div id="map" style={{ width: '100%', height: 600, border: 'none' }}></div>
+          </div>
+        </div>
+        <Button variant="light"
+          onClick={() => { this.handleSelectButton() }} style={{ margin: '30px' }}> Select Trip </Button>
       </div>
     );
   }
@@ -174,32 +316,185 @@ class DestinationForm extends Component {
 
 export default DestinationForm;
 
-// //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//   // componentDidMount() {
-//   //   fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=383%20Dolores%20Street,%20San%20Francisco,%20CA%2094110&destination=85%20Bluxome%20St,%20San%20Francisco,%20CA%2094107&key=AIzaSyDOvkQbCSQuh0G7F8cEqm2G6igPby0rJ9c&mode=transit&alternative=true`)
-//   //     // .then(res => res.json())
-//   //     .then(
-//   //       (result) => {
-//   //         console.log(result.routes)
-//   //         console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
-//   //         this.setState({
-//   //           isLoaded: true,
-//   //           googleAPI: result
-//   //         });
-//   //       },
-//   //       (error) => {
-//   //         console.log(error)
-//   //         this.setState({
-//   //           isLoaded: true,
-//   //           error
-//   //         });
-//   //       }
-//   //     )
-//   // }
-//   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//   // componentDidUpdate(prevProps, preveState) {
-//   //   if (this.state.origin !== null && this.state.destination !== null) {
 
-//   //   }
-//   // }
-// //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
+// import React, {Component} from 'react';
+// import {Form, Col, Row, Dropdown, Button } from 'react-bootstrap'
+        // import DatePicker from "react-datepicker";
+        // import "react-datepicker/dist/react-datepicker.css";
+        // import GoogleTripsTable from './GoogleMaps/GoogleTripsTable'
+
+        // import RouteTable from './RouteTable';
+        // import Autocomplete from './GoogleMaps/Autocomplete';
+
+// class DestinationForm extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       origin: '',
+//       destination: '',
+//       arrivedate: new Date(),
+//       newuserdata: this.props.userdata,
+//       isLoaded: false,
+//       googleAPI: [],
+//       userRequestedRoutes: false
+//     }
+//   }
+
+//   //~~~~~~ Change data state ~~~~~~~~~~~~~
+//   handleOrigin = (event) => {
+//     this.setState({
+//       origin: event.target.value
+//     });
+//   }
+//   handleDestination = (event) => {
+//     this.setState({
+//       destination: event.target.value
+//     });
+//   }
+//   handleChange = (date) => {
+//     this.setState({
+//       arrivedate: date
+//     });
+//   }
+//   //~~~~~~~~~~~~ Select Origin~~~~~~~
+//   handleClick = (useraddress) => {
+//     this.setState({
+//       origin: useraddress.address
+//     })
+//   }
+//   //~~~~~~~~~~~~Select Destination~~~~~~~~~~~~
+//   handleClick2 = (useraddress) => {
+//     this.setState({
+//       destination: useraddress.address
+//     })
+//   }
+
+//   buttonWasClicked() {
+//     console.log('button was clicked')
+//     console.log(this.state.origin)
+//     console.log(this.state.destination)
+//   }
+
+//   handleSelectButton = () => {
+//     this.buttonWasClicked()
+//   }
+
+//   render() {
+//     let userdata = this.props.userdata
+
+//     //start address
+//     const useraddresses = this.state.newuserdata.map((useraddress) =>
+//       <Dropdown.Item
+//         onClick={() => { this.handleClick(useraddress) }}
+//         key={useraddress.id}
+//         onChange={this.handleOrigin}>
+//         {useraddress.address}
+//       </Dropdown.Item>
+//     )
+
+//     //destination address
+//     const useraddresses2 = userdata.map((useraddress) =>
+//       <Dropdown.Item
+//         onClick={() => { this.handleClick2(useraddress) }}
+//         key={useraddress.id}
+//         onChange={this.handleDestination}>
+//         {useraddress.address}
+//       </Dropdown.Item>
+//     )
+
+//     return (
+//       <div className="destinationForm">
+//         <Form>
+//           {/************* Start Address ***************/}
+//           <Form.Group as={Row} controlId="formHorizontalPassword">
+//             <Form.Label column sm={1}>
+//               Start Location
+//               </Form.Label>
+//             <Col sm={4}>
+//               <Form.Control
+//                 type="text"
+//                 placeholder="Address"
+//                 // defaultValue={this.state.origin || ''}
+//                 onChange={this.handleOrigin}
+//                 value={this.state.origin} />
+//             </Col>
+//             <Col sm={2}>
+//               <Dropdown>
+//                 <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
+//                   Your Addresses
+//                   </Dropdown.Toggle>
+//                 <Dropdown.Menu>
+//                   {useraddresses}
+//                 </Dropdown.Menu>
+//               </Dropdown>
+//             </Col>
+//           </Form.Group>
+//           {/************* Destination ***************/}
+//           <Form.Group as={Row} controlId="formHorizontalPassword">
+//             <Form.Label column sm={1}>
+//               Destination
+//               </Form.Label>
+//             <Col sm={4}>
+//               <Form.Control
+//                 type="text"
+//                 placeholder="Address"
+//                 // defaultValue={this.state.destination || ''}
+//                 onChange={this.handleDestination}
+//                 value={this.state.destination} />
+//             </Col>
+//             <Col sm={2}>
+//               <Dropdown>
+//                 <Dropdown.Toggle variant="secondary" id="dropdown-basic" >
+//                   Your Addresses
+//                   </Dropdown.Toggle>
+//                 <Dropdown.Menu>
+//                   {useraddresses2}
+//                 </Dropdown.Menu>
+//               </Dropdown>
+//             </Col>
+//             <Col sm={3}>
+//               <DatePicker
+//                 selected={this.state.arrivedate}
+//                 onChange={this.handleChange}
+//                 // onChange={this.handleArriveDate}
+//                 showTimeSelect
+//                 timeFormat="HH:mm"
+//                 timeIntervals={15}
+//                 dateFormat="MMMM d, yyyy h:mm aa"
+//                 timeCaption="time"
+//                 value={this.state.arrivedate}
+//               />
+//             </Col>
+//             <Col sm={1}>
+//               <Button variant="light"
+//                 onClick={() => { this.handleSelectButton() }}> Select </Button>
+//             </Col>
+//           </Form.Group>
+//         </Form>
+
+//         <RouteTable
+//           origin={this.state.origin}
+//           destination={this.state.destination}
+//           arrivedate={this.state.arrivedate}
+//           userRequestedRoutes={this.state.userRequestedRoutes}
+//         />
+
+//         <GoogleTripsTable
+//           origin={this.state.origin}
+//           destination={this.state.destination}
+//           arrivedate={this.state.arrivedate}
+//           userRequestedRoutes={this.state.userRequestedRoutes}
+//         />
+
+//       </div>
+//     );
+//   }
+// }
+
+// export default DestinationForm;

@@ -41,7 +41,6 @@ class AddressContainer extends Component {
             <Form.Control
               type="text"
               placeholder="Enter address"
-              type="text"
               onChange={this.handleNewAddress}
               value={this.state.newaddress}
             />

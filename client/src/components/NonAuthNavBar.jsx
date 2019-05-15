@@ -1,23 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
 class NonAuthNavBar extends React.Component {
 
   render() {
     return (
-      <div className='App-header'>
-        <Navbar className='navMain'>
-          <Navbar.Brand className='navMain' >Commute Buddy</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Link to='/' className='navLink'> Main </Link>
-            <Link to='/about' className='navLink'>About </Link>
-            <Link to='/signin' className='navLink'>Sign In </Link>
-          </Nav>
-        </Navbar>
+      <div className='App-header nonAuthNav'>
+        <Navbar collapseOnSelect expand="true" className='navMain'>
+          <Navbar.Brand href="/" className='navMain'>Commute Buddy</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" className='signInHamburgerNav' />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="/">Main</Nav.Link>
+              <Nav.Link href="/About">About</Nav.Link>
+              <Nav.Link href="/Sing In">Sign In</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>;
       </div>
     )
-
   }
 }
 
