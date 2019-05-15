@@ -35,7 +35,7 @@ class NavBar extends React.Component {
       <div className='App-header navMain'>
         {/* <Container> */}
         <Navbar collapseOnSelect expand="true" className='navMain' fixed="top">
-          <Navbar.Brand href="/" className='navMain'>Commute Buddy</Navbar.Brand>
+          <Navbar.Brand href="/main" className='navMain'>Commute Buddy</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" className='signInHamburgerNav' />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">

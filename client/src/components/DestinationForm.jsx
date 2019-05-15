@@ -21,7 +21,7 @@ function AutocompleteDirectionsHandler(map) {
   var originInput = document.getElementById('origin-input');
   var destinationInput = document.getElementById('destination-input');
   var modeSelector = document.getElementById('mode-selector');
-  // var arrivalSelector = document.getElementById('arrival-selector')
+  this.arrival_date = new Date();
 
   var originAutocomplete = new google.maps.places.Autocomplete(originInput);
   // Specify just the place data fields that you need.
@@ -85,8 +85,9 @@ AutocompleteDirectionsHandler.prototype.route = function () {
       origin: { 'placeId': this.originPlaceId },
       destination: { 'placeId': this.destinationPlaceId },
       travelMode: this.travelMode,
-      //arrival_time: this.arrival_time
-      // transitOptions: this.transitOptions TODO: how to print transit option results
+      transitOptions: {
+        arrivalTime: this.arrival_date
+      } //this.transitOptions TODO: how to print transit option results
       // arrivalTime: this.state.arrivedate //TODO: will this work?
       // arrivalTime: transitOptions.arrivalTime
     },
@@ -98,7 +99,6 @@ AutocompleteDirectionsHandler.prototype.route = function () {
         window.alert('Directions request failed due to ' + status);
       }
     });
-  console.log(this.response)
 };
 
 class DestinationForm extends Component {
@@ -130,6 +130,9 @@ class DestinationForm extends Component {
     this.setState({
       arrivedate: date
     });
+
+    this.directionsHandler.arrival_date = date;
+    this.directionsHandler.route();
   }
   //~~~~~~~~~~~~ Select Origin~~~~~~~
   handleClick = (useraddress) => {
@@ -258,6 +261,7 @@ class DestinationForm extends Component {
                 dateFormat="MMMM d, yyyy h:mm aa"
                 timeCaption="time"
                 value={this.state.arrivedate}
+                id="arrival-selector"
               />
             </Col>
             <Col sm={5} >
@@ -293,11 +297,11 @@ class DestinationForm extends Component {
                 <label htmlFor="changemode-driving">Driving</label>
               </div>
             </div>
-            <div id="map" style={{ width: '100%', height: 600, border: 'none' }}></div>
+            <div id="map" style={{ width: '100%', height: 400, border: 'none' }}></div>
           </div>
         </div>
         <Button variant="light"
-          onClick={() => { this.handleSelectButton() }} style={{ margin: '30px' }}> Select Trip </Button>
+          onClick={() => { this.handleSelectButton() }} className='darkButton'> Select Trip </Button>
       </div>
     );
   }
