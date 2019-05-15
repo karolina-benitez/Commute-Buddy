@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 import fire from '../config/Fire';
 
-const navStyle = {
-  marginTop: '10%',
-  backgroundColor: 'white'
-};
+// const navStyle = {
+//   marginTop: '10%',
+//   backgroundColor: 'white'
+// };
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -16,21 +16,35 @@ class NavBar extends React.Component {
   logout() {
     fire.auth().signOut();
   }
+
+
+  //   
+  //     
+  //       <Nav.Link href="/" className='hamburgerLink'>Main</Nav.Link>
+  //       <Nav.Link href="/about" className='hamburgerLink'>About</Nav.Link>
+  //       <Nav.Link href="/signin" className='hamburgerLink'>Sign In</Nav.Link>
+  //     </Nav>
+  //   </Navbar.Collapse>
+  // </Navbar>
+  //       </div >
+  //     )
+  //   }
   render() {
     // const userdata = this.props.userdata
     return (
-      <div className='App-header navMain' style={navStyle}>
+      <div className='App-header navMain'>
         {/* <Container> */}
-        <Navbar expand="lg" fixed="top" style={{ backgroundColor: '#285128' }} >
-          <Navbar.Brand className='navMain' style={{ color: 'white' }}>Commute Buddy</Navbar.Brand>
-          <Nav className="mr-sm-2" >
-            <Link to='/main' className='navLink' style={{ color: 'white' }}> Home </Link>
-            <Link to='/selection' className='navLink' style={{ color: 'white' }}>Routes </Link>
-            <Link to='/usersettings' className='navLink' style={{ color: 'white' }}>Settings </Link>
-            <Link to='/'
-              onClick={this.logout} className='navLink' style={{ color: 'white' }}>Sign Out</Link>
-            {/* <div className='navgreet'>Welcome back {userdata[0].firstname}!</div> */}
-          </Nav>
+        <Navbar collapseOnSelect expand="true" className='navMain' fixed="top">
+          <Navbar.Brand href="/" className='navMain'>Commute Buddy</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" className='signInHamburgerNav' />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="/main" className='hamburgerLink navLink'>Home</Nav.Link>
+              <Nav.Link href="/selection" className='hamburgerLink navLink'>Routes</Nav.Link>
+              <Nav.Link href="/usersettings" className='hamburgerLink navLink'>Settings</Nav.Link>
+              <Nav.Link href="/" onClick={this.logout} className='hamburgerLink navLink'>Sign Out</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
       </div>
     )

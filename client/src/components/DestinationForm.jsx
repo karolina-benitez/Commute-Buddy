@@ -193,6 +193,9 @@ class DestinationForm extends Component {
   render() {
     let userdata = this.props.userdata
     console.log(this.response)
+    console.log(this.state.arrivedate)
+    console.log(typeof this.state.arrivedate)
+
 
     const useraddresses = this.state.newuserdata.map((useraddress) =>
       <Dropdown.Item
@@ -244,7 +247,7 @@ class DestinationForm extends Component {
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
-            <Col sm={2}>
+            <Col sm={4}>
               <DatePicker
                 selected={this.state.arrivedate}
                 onChange={this.handleChange}
@@ -257,7 +260,7 @@ class DestinationForm extends Component {
                 value={this.state.arrivedate}
               />
             </Col>
-            <Col sm={3} >
+            <Col sm={5} >
               <input type="radio" name="type" id="changemode-walking" checked="defaultChecked" style={{ marginRight: '16px' }} />
               <label htmlFor="changemode-walking" style={{ marginRight: '16px' }}>Walking</label>
 

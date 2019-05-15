@@ -118,76 +118,76 @@ class UserSettings extends Component {
   render() {
     const userdata = this.props.userdata
     return (
-      <div className="userSettings">
+      <div className='authenitcatedPageBG'>
         <NavBar userdata={userdata} />
-        <h3>Update Profile</h3>
-        <Form onSubmit={this.submitHandler}>
-          <Form.Group>
-            <Form.Label>First Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="First Name"
-              value={this.state.firstname}
-              onChange={e => this.setState({ firstname: e.target.value })} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Last Name"
-              value={this.state.lastname}
-              onChange={e => this.setState({ lastname: e.target.value })} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>
-              Phone Number (Must be able to receive text notifications)
+        <div className="userSettingsContent">
+          <h3>Update Profile</h3>
+          <Form onSubmit={this.submitHandler}>
+            <Form.Group>
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="First Name"
+                value={this.state.firstname}
+                onChange={e => this.setState({ firstname: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Last Name"
+                value={this.state.lastname}
+                onChange={e => this.setState({ lastname: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>
+                Phone Number (Must be able to receive text notifications)
             </Form.Label>
-            <Form.Control
-              type='text'
-              placeholder="Phone Number"
-              value={this.state.phonenumber}
-              onChange={e => this.setState({ phonenumber: e.target.value })} />
-          </Form.Group>
-          {/*~~~~~~~~ Notification Preferences ~~~~~~~~~~~~~ */}
-          <h3>Select Notification types</h3>
-          <p>
-            Traffic Alert
+              <Form.Control
+                type='text'
+                placeholder="Phone Number"
+                value={this.state.phonenumber}
+                onChange={e => this.setState({ phonenumber: e.target.value })} />
+            </Form.Group>
+            {/*~~~~~~~~ Notification Preferences ~~~~~~~~~~~~~ */}
+            <h3>Select Notification types</h3>
+            <p>
+              Traffic Alert
             <br></br>
-            <input type="checkbox"
-              onChange={this.handleTraffic} />
-          </p>
-          <p>
-            Weather Alert
+              <input type="checkbox"
+                onChange={this.handleTraffic} />
+            </p>
+            <p>
+              Weather Alert
             <br></br>
-            <input type="checkbox"
-              onChange={this.handleWeather} />
-          </p>
-          <p>
-            Transit Alert
+              <input type="checkbox"
+                onChange={this.handleWeather} />
+            </p>
+            <p>
+              Transit Alert
             <br></br>
-            <input type="checkbox"
-              onChange={this.handleTransit} />
-          </p>
-          <p>
-            Event Alert
+              <input type="checkbox"
+                onChange={this.handleTransit} />
+            </p>
+            <p>
+              Event Alert
             <br></br>
-            <input type="checkbox"
-              onChange={this.handleEvent} />
-          </p>
-          {/*~~~~~~~~ submit button ~~~~~~~~~~~~~ */}
-          <Button variant="link" className='button' type="submit">
-            Submit
-          </Button>
-        </Form>
-        <AddressContainer 
-          isAuth={this.props.isAuth}
-          userdata={this.props.userdata}
-        />
-        <Button variant="link" href='main'>
-          Back to Settings
+              <input type="checkbox"
+                onChange={this.handleEvent} />
+            </p>
+            {/*~~~~~~~~ submit button ~~~~~~~~~~~~~ */}
+            <Button variant="light" size="sm" className='darkButton' href="/main">
+              Back
         </Button>
+            <Button variant="light" size="sm" className='darkButton' type="submit">
+              Submit
+          </Button>
+          </Form>
 
+
+        </div>
       </div>
+
     )
   }
 }

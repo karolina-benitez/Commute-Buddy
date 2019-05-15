@@ -8,32 +8,33 @@ import NotificationsButton from '../components/NotificationsButton';
 class Notifications extends Component {
   render() {
     return (
-      <div>
+      <div className='authenitcatedPageBG'>
         <NavBar userdata={this.props.userdata} />
-        <h3>We'll Notify you of any changes</h3>
-        <h5>Selected Route</h5>
-        <h5>Arrive by: April 30, 2019 @ 8:25 AM</h5>
-        <div className='routeTable' >
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>Transit Option</th>
-                <th>Price</th>
-                <th>Duration</th>
-                <th>Arrive By</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Ferry</td>
-                <td>$7.00</td>
-                <td>25 mins</td>
-                <td>8:25 AM</td>
-              </tr>
-            </tbody>
-          </Table>
+        <div className='selectedRouteContent'>
+          <h3 style={{ padding: '2%' }}>We'll Notify you of any changes</h3>
+          <h5 style={{ padding: '2%' }}>Arrive by: April 30, 2019 @ 8:25 AM</h5>
+          <div className='routeTable' >
+            <Table striped bordered hover size="sm">
+              <thead>
+                <tr>
+                  <th>Transit Option</th>
+                  <th>Price</th>
+                  <th>Duration</th>
+                  <th>Arrive By</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ferry</td>
+                  <td>$7.00</td>
+                  <td>25 mins</td>
+                  <td>8:25 AM</td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+          <NotificationsButton style={{ padding: '4%' }} />
         </div>
-        <NotificationsButton />
       </div>
     )
   }
