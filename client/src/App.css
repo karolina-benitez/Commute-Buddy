@@ -7,7 +7,12 @@ html, body, .App, .Home{
   font-family: 'Open Sans', sans-serif;
 }
 .Home {
-  background-image: url("https://images.unsplash.com/photo-1490555057042-39428536226a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80") !important;
+  background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+  url("https://images.unsplash.com/photo-1490555057042-39428536226a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80") !important;
   background-size: cover;
 }
 .Home h1 {
@@ -16,11 +21,49 @@ html, body, .App, .Home{
   font-size: 10rem;
 }
 .signIn {
-  background-image: url("https://images.unsplash.com/photo-1490555057042-39428536226a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80");
+  background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+  url("https://images.unsplash.com/photo-1486256190469-627576361a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
   background-size: cover;
   width: 100%;
   height: 100%;
   position: fixed;
+  overflow-x: scroll;
+
+}
+.about {
+  background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+  url("https://images.unsplash.com/photo-1475856717448-9689907d696a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-x: scroll;
+
+}
+.about h3 {
+  text-decoration: underline;
+  size: 3rem;
+  padding: 3% 0 3% 0;
+  font-weight: bold;
+}
+.aboutContent {
+  background-color: white;
+  padding: 2%;
+  margin-left:auto;
+  margin-right:auto;
+  width:60%;
+  box-shadow: 0 8px 16px 0 rgba(243, 242, 242, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.562); 
+}
+.aboutContent h4 {
+  line-height: 1.2;
 }
 .signInContent {
   background-color: rgba(219, 219, 219, 0.98);
@@ -59,11 +102,8 @@ html, body, .App, .Home{
 }
 .navMain {
   font-family: 'Cuprum', sans-serif;  
-  font-size: 3rem;
-  /* border: 3px solid red; */
-  /* background-color: #aca9a4; */
-  /* margin: 10px;
-  margin-right: 300px */
+  font-size: 5rem;
+  color: white !important;
 }
 .navLink{
   color: black;
@@ -75,10 +115,17 @@ html, body, .App, .Home{
   color: #285128;
 }
 .nonAuthNav {
-  background-color: rgb(250, 250, 250, 0.85)
+  background-color: rgba(0, 0, 0, 0.50);
+  position:relative;
+}
+.navbar-toggler {
+  background-color: rgba(255, 255, 255, 0.698);
+  /* border-radius: 50%; */
 }
 .hamburgerLink {
  font-size: 2rem;
+ padding: 8px;
+ color: white !important;
 }
 .signInHamburgerNav Navbar.Toggle{
   border: 2px solid red;
@@ -143,9 +190,6 @@ font-weight: 200 ;
 .userSettings, .about {
   /* text-align: center; */
   margin: auto;
-}
-.about h3 {
-  background-color: #aca9a4;
 }
 .fab {
   font-size: 3rem;

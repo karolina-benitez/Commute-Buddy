@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 
 class NonAuthNavBar extends React.Component {
 
@@ -13,8 +12,8 @@ class NonAuthNavBar extends React.Component {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/" className='hamburgerLink'>Main</Nav.Link>
-              <Nav.Link href="/About" className='hamburgerLink'>About</Nav.Link>
-              <Nav.Link href="/Sing In" className='hamburgerLink'>Sign In</Nav.Link>
+              <Nav.Link href="/about" className='hamburgerLink'>About</Nav.Link>
+              <Nav.Link href="/signin" className='hamburgerLink'>Sign In</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

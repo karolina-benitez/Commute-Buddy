@@ -2,7 +2,7 @@ import React from 'react'
 import fire from '../config/Fire'
 import { Link } from 'react-router-dom'
 import NonAuthNavBar from '../components/NonAuthNavBar';
-
+import { Redirect } from 'react-router-dom'
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -33,6 +33,19 @@ class SignIn extends React.Component {
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.email) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/main"
+          }}
+        />
+      )
+
+    }
   }
 
   render() {
