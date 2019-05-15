@@ -12,12 +12,12 @@ class NonAuthNavBar extends React.Component {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" className='signInHamburgerNav' />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/">Main</Nav.Link>
-              <Nav.Link href="/About">About</Nav.Link>
-              <Nav.Link href="/Sing In">Sign In</Nav.Link>
+              <Nav.Link href="/" className='hamburgerLink'>Main</Nav.Link>
+              <Nav.Link href="/About" className='hamburgerLink'>About</Nav.Link>
+              <Nav.Link href="/Sing In" className='hamburgerLink'>Sign In</Nav.Link>
             </Nav>
           </Navbar.Collapse>
-        </Navbar>;
+        </Navbar>
       </div>
     )
   }
