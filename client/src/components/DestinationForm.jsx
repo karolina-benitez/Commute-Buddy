@@ -87,9 +87,7 @@ AutocompleteDirectionsHandler.prototype.route = function () {
       travelMode: this.travelMode,
       transitOptions: {
         arrivalTime: this.arrival_date
-      } //this.transitOptions TODO: how to print transit option results
-      // arrivalTime: this.state.arrivedate //TODO: will this work?
-      // arrivalTime: transitOptions.arrivalTime
+      }
     },
     function (response, status) {
       if (status === 'OK') {

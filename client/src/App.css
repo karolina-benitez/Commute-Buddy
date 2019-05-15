@@ -168,6 +168,9 @@ html, body, .App, .Home{
   box-shadow: 0 8px 16px 0 rgba(243, 242, 242, 0.472), 0 6px 20px 0 rgba(253, 253, 253, 0.623);
 
 }
+.mainPgStyle {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.62), 0 6px 20px 0 rgba(253, 253, 253, 0.923);
+}
 .button:hover  {
   width: 40%;
   height: 40;

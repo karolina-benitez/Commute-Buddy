@@ -2,6 +2,12 @@
 
 Tired of having to check multiple sources each morning in preparation for you commute? Let Commute buddy check traffic, weather, detours, and events for you! Commute buddy will notify you if anything occurs that will cause a delay in your daily commute and give you suggestions on alternate routes or ways to get to your destination
 
+## Data
+
+### * [Google Maps JavascriptAPI](https://developers.google.com/maps/documentation/javascript/tutorial)
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -58,9 +64,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [React](https://reactjs.org/)
+* [Node.js](https://nodejs.org/)
+* [Express](https://expressjs.com/)
+* [PostgresSQL](https://www.postgresql.org/)
+* [Firebase Authentication](https://firebase.google.com/docs/auth)
 
 ## Contributing
 
