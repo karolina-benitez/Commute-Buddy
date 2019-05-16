@@ -31,11 +31,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - In terminal, in home directory `~`, clone the repo, `git clone https://github.com/karolina-benitez/Commute-Buddy.git`.
 - In terminal, `cd Commute-Buddy`, run `npm i -S body-parser dotenv express pg` 
-- Install: 
-* [body-parser](https://github.com/expressjs/body-parser)
-* [dotenv](https://www.npmjs.com/package/dotenv)
-* [express](https://expressjs.com/)
-* [node-postgres](https://www.npmjs.com/package/pg).
+- This will install: [body-parser](https://github.com/expressjs/body-parser), [dotenv](https://www.npmjs.com/package/dotenv), [express](https://expressjs.com/), and [node-postgres](https://www.npmjs.com/package/pg).
 
 - Download and install [PostgresSQL](https://www.postgresql.org/).
 - Open PostgresSQL, create a connection using `Host: localhost`. The port is 5432 by default.
@@ -73,10 +69,6 @@ CREATE TABLE trips (
 - Signup for [Firebase](https://firebase.google.com/docs/auth), Firebase creates a `uid` for each user that signs up
 
 - In terminal, `cd ../client`, to go back to `/client` folder, run `npm i -S firebase react-bootstrap react-datepicker react-router-dom` 
-- Install: 
-* [firebase](https://firebase.google.com)
-* [react-bootstrap](https://react-bootstrap.github.io/)
-* [react-datepicker](https://www.npmjs.com/package/react-datepicker)
-* [react-router-dom](https://www.npmjs.com/package/react-router-dom).
+- This will install: [firebase](https://firebase.google.com), [react-bootstrap](https://react-bootstrap.github.io/), [react-datepicker](https://www.npmjs.com/package/react-datepicker), and [react-router-dom](https://www.npmjs.com/package/react-router-dom).
 
 - In the /client folder, run `npm start`, enjoy!
