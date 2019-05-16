@@ -25,9 +25,9 @@ class MainPage extends Component {
   render() {
     const userdata = this.props.userdata
     return (
-      <div className="mainContainer authenitcatedPageBG" >
+      <div className="mainContainer " >
         <NavBar userdata={userdata} isAuth={this.props.isAuth} style={{ margin: 1000 }} />
-        <div className='mainContent'>
+        <div className='mainContent mainPgStyle'>
           <DestinationForm
             userdata={userdata}
             origin={this.state.origin}
