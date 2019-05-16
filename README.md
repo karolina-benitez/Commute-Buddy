@@ -27,3 +27,56 @@ Tired of having to check multiple sources each morning in preparation for you co
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### How to Set Up
+
+- In terminal, in home directory `~`, clone the repo, `git clone https://github.com/karolina-benitez/Commute-Buddy.git`.
+- In terminal, `cd Commute-Buddy`, run `npm i -S body-parser dotenv express pg` 
+- Install: 
+* [body-parser](https://github.com/expressjs/body-parser)
+* [dotenv](https://www.npmjs.com/package/dotenv)
+* [express](https://expressjs.com/)
+* [node-postgres](https://www.npmjs.com/package/pg).
+
+- Download and install [PostgresSQL](https://www.postgresql.org/).
+- Open PostgresSQL, create a connection using `Host: localhost`. The port is 5432 by default.
+- In the connection, add a database named `commutebuddy`.
+- Go to `commutebuddy` database, run the following query to create a table called `udata`.
+
+```
+CREATE TABLE udata (
+  id SERIAL,
+  uid VARCHAR, 
+  firstname VARCHAR, 
+  lastname VARCHAR,
+  email VARCHAR,
+  phonenumber INT,
+  trafficalert BOOLEAN DEFAULT FALSE,
+  eventalert BOOLEAN DEFAULT FALSE,
+  weatheralert BOOLEAN DEFAULT FALSE,
+  transitalert BOOLEAN DEFAULT FALSE,
+
+);
+```
+
+- Next, create a table called `trips`.
+
+```
+CREATE TABLE trips (
+  id SERIAL,
+  uid VARCHAR, 
+  origin VARCHAR, 
+  destination VARCHAR, 
+  arrivedate DATE
+);
+```
+
+- Signup for [Firebase](https://firebase.google.com/docs/auth), Firebase creates a `uid` for each user that signs up
+
+- In terminal, `cd ../client`, to go back to `/client` folder, run `npm i -S firebase react-bootstrap react-datepicker react-router-dom` 
+- Install: 
+* [firebase](https://firebase.google.com)
+* [react-bootstrap](https://react-bootstrap.github.io/)
+* [react-datepicker](https://www.npmjs.com/package/react-datepicker)
+* [react-router-dom](https://www.npmjs.com/package/react-router-dom).
+
+- In the /client folder, run `npm start`, enjoy!

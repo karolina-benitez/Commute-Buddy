@@ -64,9 +64,9 @@ class SignIn extends React.Component {
           <div class='signInButton'>
             <Link href='/main'
               onClick={this.logout} className='navLink'>
-              <button type='submit' onClick={this.login} className='btn  button' >Login</button>
+              <button type='submit' href="/main" onClick={this.login} className='btn  button' >Login</button>
             </Link>
-            <button onClick={this.signup} style={{ marginLeft: '25px' }} className='btn  button'>Sign Up</button>
+            <button onClick={this.signup} href="/main" style={{ marginLeft: '25px' }} className='btn  button'>Sign Up</button>
           </div>
         </div>
       </div>
