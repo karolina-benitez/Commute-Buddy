@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 import fire from '../config/Fire';
 
@@ -16,26 +15,15 @@ class NavBar extends React.Component {
   logout() {
     fire.auth().signOut();
   }
-
-
-  //   
-  //     
-  //       <Nav.Link href="/" className='hamburgerLink'>Main</Nav.Link>
-  //       <Nav.Link href="/about" className='hamburgerLink'>About</Nav.Link>
-  //       <Nav.Link href="/signin" className='hamburgerLink'>Sign In</Nav.Link>
-  //     </Nav>
-  //   </Navbar.Collapse>
-  // </Navbar>
-  //       </div >
-  //     )
-  //   }
   render() {
-    // const userdata = this.props.userdata
+    const userdata = this.props.userdata
+    console.log(userdata)
     return (
       <div className='App-header navMain'>
         {/* <Container> */}
         <Navbar collapseOnSelect expand="true" className='navMain' fixed="top">
           <Navbar.Brand href="/main" className='navMain'>Commute Buddy</Navbar.Brand>
+          {/* <div className='navgreet'>Welcome back {userdata[0].firstname} {userdata[0].lastname}</div> */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" className='signInHamburgerNav' />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">

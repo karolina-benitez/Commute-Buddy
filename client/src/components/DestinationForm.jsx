@@ -2,102 +2,8 @@ import React, { Component } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import RouteTable from './RouteTable';
+import RouteTable from './RouteTable';
 const google = window.google;
-
-function AutocompleteDirectionsHandler(map) {
-  this.map = map;
-  this.originPlaceId = null;
-  this.destinationPlaceId = null;
-
-  this.travelMode = 'WALKING';
-  this.traffic_model = 'best_guess'; //TODO: check if works
-  this.directionsService = new google.maps.DirectionsService();
-  this.directionsDisplay = new google.maps.DirectionsRenderer();
-  this.directionsDisplay.setMap(map);
-
-  var originInput = document.getElementById('origin-input');
-  var destinationInput = document.getElementById('destination-input');
-  var modeSelector = document.getElementById('mode-selector');
-  this.arrival_date = new Date();
-
-  var originAutocomplete = new google.maps.places.Autocomplete(originInput);
-  // Specify just the place data fields that you need.
-  originAutocomplete.setFields(['place_id']);
-
-  var destinationAutocomplete =
-    new google.maps.places.Autocomplete(destinationInput);
-  // Specify just the place data fields that you need.
-  destinationAutocomplete.setFields(['place_id']);
-
-  this.setupClickListener('changemode-walking', 'WALKING');
-  this.setupClickListener('changemode-transit', 'TRANSIT');
-  this.setupClickListener('changemode-driving', 'DRIVING');
-
-  this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-  this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
-  this.map.controls.push(originInput);
-  this.map.controls.push(
-    destinationInput);
-  this.map.controls.push(modeSelector);
-  console.log(this.response)
-}
-
-AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
-  var radioButton = document.getElementById(id);
-  var me = this;
-
-  radioButton.addEventListener('click', function () {
-    me.travelMode = mode;
-    me.route();
-  });
-};
-
-AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
-  var me = this;
-  autocomplete.bindTo('bounds', this.map);
-  autocomplete.addListener('place_changed', function () {
-    var place = autocomplete.getPlace();
-    if (!place.place_id) {
-      window.alert('Please select an option from the dropdown list.');
-      return;
-    }
-    if (mode === 'ORIG') {
-      me.originPlaceId = place.place_id;
-    } else {
-      me.destinationPlaceId = place.place_id;
-    }
-    me.route();
-  });
-};
-
-AutocompleteDirectionsHandler.prototype.route = function () {
-  if (!this.originPlaceId || !this.destinationPlaceId) {
-    return;
-  }
-  var me = this;
-
-  this.directionsService.route(
-    {
-      origin: { 'placeId': this.originPlaceId },
-      destination: { 'placeId': this.destinationPlaceId },
-      travelMode: this.travelMode,
-      transitOptions: {
-        arrivalTime: this.arrival_date
-      }
-    },
-    function (response, status) {
-      if (status === 'OK') {
-        me.directionsDisplay.setDirections(response);
-        console.log(this.response)
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
-  console.log(this.response)
-
-};
 
 class DestinationForm extends Component {
   constructor(props) {
@@ -108,17 +14,111 @@ class DestinationForm extends Component {
       arrivedate: new Date(),
       newuserdata: this.props.userdata,
       isLoaded: false,
-      googleAPI: [],
-      userRequestedRoutes: false
+      mapsResults: {}
     }
   }
 
-  handleChange = (date) => {
-    this.setState({
-      arrivedate: date
+
+  AutocompleteDirectionsHandler = (map) => {
+    this.map = map;
+    this.originPlaceId = null;
+    this.destinationPlaceId = null;
+
+    this.travelMode = 'WALKING';
+    this.traffic_model = 'best_guess'; //TODO: check if works
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsDisplay = new google.maps.DirectionsRenderer();
+    this.directionsDisplay.setMap(map);
+
+    var originInput = document.getElementById('origin-input');
+    var destinationInput = document.getElementById('destination-input');
+    var modeSelector = document.getElementById('mode-selector');
+    this.arrival_date = new Date();
+
+    var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+    // Specify just the place data fields that you need.
+    originAutocomplete.setFields(['place_id']);
+
+    var destinationAutocomplete =
+      new google.maps.places.Autocomplete(destinationInput);
+    // Specify just the place data fields that you need.
+    destinationAutocomplete.setFields(['place_id']);
+
+    this.setupClickListener('changemode-walking', 'WALKING');
+    this.setupClickListener('changemode-transit', 'TRANSIT');
+    this.setupClickListener('changemode-driving', 'DRIVING');
+
+    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+    this.map.controls.push(originInput);
+    this.map.controls.push(
+      destinationInput);
+    this.map.controls.push(modeSelector);
+  }
+
+  setupClickListener = (id, mode) => {
+    var radioButton = document.getElementById(id);
+    var me = this;
+
+    radioButton.addEventListener('click', function () {
+      me.travelMode = mode;
+      me.route();
     });
-    this.directionsHandler.arrival_date = date;
-    this.directionsHandler.route();
+  };
+
+  setupPlaceChangedListener = (autocomplete, mode) => {
+    var me = this;
+    autocomplete.bindTo('bounds', this.map);
+    autocomplete.addListener('place_changed', function () {
+      var place = autocomplete.getPlace();
+      if (!place.place_id) {
+        window.alert('Please select an option from the dropdown list.');
+        return;
+      }
+      if (mode === 'ORIG') {
+        me.originPlaceId = place.place_id;
+      } else {
+        me.destinationPlaceId = place.place_id;
+      }
+      me.route();
+    });
+  };
+
+  route = () => {
+    if (!this.originPlaceId || !this.destinationPlaceId) {
+      return;
+    }
+    var me = this;
+
+    this.directionsService.route(
+      {
+        origin: { 'placeId': this.originPlaceId },
+        destination: { 'placeId': this.destinationPlaceId },
+        travelMode: this.travelMode,
+        transitOptions: {
+          arrivalTime: this.arrival_date
+        }
+      },
+      (response, status) => {
+        if (status === 'OK') {
+          me.directionsDisplay.setDirections(response);
+          console.log('did it work', response)
+          this.setState({
+            mapsResults: response
+          })
+
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+  };
+  handleChange = (date) => {
+    // this.setState({
+    //   arrivedate: date
+    // });
+    this.arrival_date = date;
+    this.route();
   }
 
   getGoogleMaps() {
@@ -152,19 +152,19 @@ class DestinationForm extends Component {
         center: { lat: 37.7749, lng: -122.4194 },
         zoom: 14
       });
-      this.directionsHandler = new AutocompleteDirectionsHandler(map)
+      this.directionsHandler = this.AutocompleteDirectionsHandler(map)
     });
   }
   render() {
-    console.log(this.response)
-    console.log(this.state.arrivedate)
-    let userdata = this.props.userdata
-
+    // console.log(this.response)
+    console.log(this.state.mapsResults)
+    // let userdata = this.props.userdata
+    // console.log(userdata)
     return (
       <div className="destinationForm">
         <Form>
           <Form.Group as={Row}>
-            <Form.Label column sm={1}>
+            <Form.Label column sm={2}>
               Start Location
               </Form.Label>
             <Col sm={4}>
@@ -191,7 +191,10 @@ class DestinationForm extends Component {
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
-            <Col sm={4}>
+            <Form.Label column sm={2}>
+              Arrive By
+              </Form.Label>
+            <Col sm={3}>
               <DatePicker
                 selected={this.state.arrivedate}
                 onChange={this.handleChange}
@@ -206,7 +209,7 @@ class DestinationForm extends Component {
               />
             </Col>
             <Col sm={5} >
-              <input type="radio" name="type" id="changemode-walking" checked="defaultChecked" style={{ marginRight: '16px' }} />
+              <input type="radio" name="type" id="changemode-walking" style={{ marginRight: '16px' }} />
               <label htmlFor="changemode-walking" style={{ marginRight: '16px' }}>Walking</label>
 
               <input type="radio" name="type" id="changemode-transit" style={{ marginRight: '16px' }} />
@@ -218,12 +221,9 @@ class DestinationForm extends Component {
           </Form.Group>
         </Form>
 
-        {/* <RouteTable
-          origin={this.state.origin}
-          destination={this.state.destination}
-          arrivedate={this.state.arrivedate}
-          userRequestedRoutes={this.state.userRequestedRoutes}
-        /> */}
+        <RouteTable
+          mapsResult={this.state.mapsResults}
+        />
         <div>
           <div >
             <div style={{ display: 'none' }}>
@@ -241,8 +241,7 @@ class DestinationForm extends Component {
             <div id="map" style={{ width: '100%', height: 400, border: 'none' }}></div>
           </div>
         </div>
-        <Button variant="light"
-          onClick={() => { this.handleSelectButton() }} className='darkButton'> Select Trip </Button>
+
       </div>
     );
   }

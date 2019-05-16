@@ -1,8 +1,7 @@
-'use strict';
 import React, { Component } from 'react';
 import '../../src/App.css'
 import SignInButton from '../components/SignInButton'
-import SFvid from '../../src/videos/SFvid.mp4'
+// import SFvid from '../../src/videos/SFvid.mp4'
 
 class Home extends Component {
   constructor(props) {

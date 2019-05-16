@@ -1,54 +1,59 @@
 import React from 'react'
-import { Table /*, Form */ } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+
 
 class RouteTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      origin: this.props.origin,
-      destination: this.props.destination,
-      arrivedate: new Date(),
-      newuserdata: this.props.userdata,
-      userRequestedRoutes: false
+      mapsResult: this.props.response,
+      transitMethod: '',
+      price: '',
+      duration: '',
+      arriveDate: ''
     }
   }
 
   componentDidUpdate(prevProps) {
 
-    // check: did the user request routes
-    //did we already make the api req with the same origin/destination
-    // how to revert select button back to false
+    if (prevProps.mapResults !== this.state.mapResults) {
+      this.setState({
+        transitMethod: this.props.mapsResult.request.transitOptions.travelMode,
+        price: this.state.mapsResult.routes[0].fare.text,
+        duration: this.state.mapsResultroutes[0].legs[0].duration.text,
+        arriveDate: this.state.mapsResult.request.transitOptions.arrivalTime
+      });
+    }
   }
 
   render() {
-
+    console.log(this.state.mapsResult)
+    console.log(this.props.mapResult)
+    console.log(this.props.mapResult2)
     return (
       <div className='routeTable'>
-
-
-
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
               <th></th>
-              <th>Transit Options</th>
+              <th>Transit Method</th>
               <th>Price</th>
               <th>Duration</th>
-              <th>Arrive By</th>
+              <th>Arrive Time</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              {/* <Form.Check type="radio" aria-label="radio 1" /> //TODO:find radio button alternative, cannot have inside <tr> */}
-              <td></td>
-              <td>{this.props.origin}</td>
-              <td>{this.props.destination}</td>
-              <td>75 mins</td>
-              <td>9:10 AM</td>
-
+              <td>{this.state.travelMode}</td>
+              <td>{this.state.price}</td>
+              <td>{this.state.duration}</td>
+              <td>{this.state.arriveDate}</td>
             </tr>
           </tbody>
         </Table>
+        <Button variant="light"
+          onClick={() => { this.handleSelectButton() }} className='darkButton'> Select Trip </Button>
       </div>
     )
   }

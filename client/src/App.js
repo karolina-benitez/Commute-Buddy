@@ -9,6 +9,7 @@ import Notifications from './pages/Notifications';
 import SelectedRoute from './pages/SelectedRoute'
 import About from './pages/About';
 import fire from './config/Fire';
+import NavBar from './components/NavBar'
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
@@ -161,6 +162,10 @@ class App extends Component {
                 userdata={this.state.userdata} />
               <PrivateRoute path='/selection'
                 component={SelectedRoute}
+                isAuth={this.state.user}
+                userdata={this.state.userdata} />
+              <PrivateRoute path='/navbar'
+                component={NavBar}
                 isAuth={this.state.user}
                 userdata={this.state.userdata} />
             </div>

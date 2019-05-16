@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../App.css';
 import { Button, Form } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
-import AddressContainer from '../components/AddressContainer';
 
 class UserSettings extends Component {
   constructor(props) {

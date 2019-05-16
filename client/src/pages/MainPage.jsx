@@ -3,11 +3,6 @@ import '../App.css';
 import DestinationForm from '../components/DestinationForm';
 import NavBar from '../components/NavBar';
 
-const mainContent = {
-  paddingLeft: 150,
-  paddingRight: 150
-};
-
 class MainPage extends Component {
   constructor(props) {
     super(props)
