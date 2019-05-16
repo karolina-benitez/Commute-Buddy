@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Col, Row, Dropdown, Button } from 'react-bootstrap'
+import { Form, Col, Row, Button } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import GoogleTripsTable from './GoogleMaps/GoogleTripsTable'
 // import RouteTable from './RouteTable';
-// import Autocomplete from './GoogleMaps/Autocomplete';
 const google = window.google;
 
 function AutocompleteDirectionsHandler(map) {
@@ -97,6 +95,8 @@ AutocompleteDirectionsHandler.prototype.route = function () {
         window.alert('Directions request failed due to ' + status);
       }
     });
+  console.log(this.response)
+
 };
 
 class DestinationForm extends Component {
@@ -113,46 +113,12 @@ class DestinationForm extends Component {
     }
   }
 
-  //~~~~~~ Change data state ~~~~~~~~~~~~~
-  handleOrigin = (event) => {
-    this.setState({
-      origin: event.target.value
-    });
-  }
-  handleDestination = (event) => {
-    this.setState({
-      destination: event.target.value
-    });
-  }
   handleChange = (date) => {
     this.setState({
       arrivedate: date
     });
-
     this.directionsHandler.arrival_date = date;
     this.directionsHandler.route();
-  }
-  //~~~~~~~~~~~~ Select Origin~~~~~~~
-  handleClick = (useraddress) => {
-    this.setState({
-      origin: useraddress.address
-    })
-  }
-  //~~~~~~~~~~~~Select Destination~~~~~~~~~~~~
-  handleClick2 = (useraddress) => {
-    this.setState({
-      destination: useraddress.address
-    })
-  }
-
-  buttonWasClicked() {
-    console.log('button was clicked')
-    console.log(this.state.origin)
-    console.log(this.state.destination)
-  }
-
-  handleSelectButton = () => {
-    this.buttonWasClicked()
   }
 
   getGoogleMaps() {
@@ -181,8 +147,6 @@ class DestinationForm extends Component {
   componentDidMount() {
     // Once the Google Maps API has finished loading, initialize the map
     this.getGoogleMaps().then((google) => {
-      // const destination = { lat: 37.7749, lng: -122.4194 }
-      //{ lat: 37.7749, lng: -122.4194 };
       const map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         center: { lat: 37.7749, lng: -122.4194 },
@@ -192,30 +156,9 @@ class DestinationForm extends Component {
     });
   }
   render() {
-    let userdata = this.props.userdata
     console.log(this.response)
     console.log(this.state.arrivedate)
-    console.log(typeof this.state.arrivedate)
-
-
-    const useraddresses = this.state.newuserdata.map((useraddress) =>
-      <Dropdown.Item
-        onClick={() => { this.handleClick(useraddress) }}
-        key={useraddress.id}
-        onChange={this.handleOrigin}>
-        {useraddress.address}
-      </Dropdown.Item>
-    )
-
-    //destination address
-    const useraddresses2 = userdata.map((useraddress) =>
-      <Dropdown.Item
-        onClick={() => { this.handleClick2(useraddress) }}
-        key={useraddress.id}
-        onChange={this.handleDestination}>
-        {useraddress.address}
-      </Dropdown.Item>
-    )
+    let userdata = this.props.userdata
 
     return (
       <div className="destinationForm">
