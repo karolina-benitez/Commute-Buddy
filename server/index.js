@@ -153,7 +153,7 @@ app.put("/udata/:email", async (req, res) => {
 app.get('/trips/:email', async (req, res) => {
   const client = await pool.connect();
 
-  client.query('SELECT destinations.uid, destinations.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
+  client.query('SELECT trips.uid, trips.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
     [req.params.email], function (err, result) {
       if (err) {
         console.error(err);
@@ -177,23 +177,23 @@ app.post('/newTrip', async (req, res) => {
   const client = await pool.connect();
 
   req.body.uid = emptyToNull(req.body.uid);
-  req.body.originId = emptyToNull(req.body.originId);
-  req.body.destinationId = emptyToNull(req.body.destinationId);
+  req.body.originid = emptyToNull(req.body.originid);
+  req.body.originaddress = emptyToNull(req.body.originaddress);
+  req.body.destinationid = emptyToNull(req.body.destinationid);
+  req.body.destinationaddress = emptyToNull(req.body.destinationaddress);
   req.body.departDate = emptyToNull(req.body.departDate);
   req.body.arriveDate = emptyToNull(req.body.arriveDate);
 
-  client.query('INSERT INTO trips(uid, originId, destinationId, departDate, arriveDate) VALUES($1, $2, $3, $4, $5) RETURNING *', [req.body.uid, req.body.originId, req.body.destinationId, req.body.departDate, req.body.arriveDate],
+  client.query('INSERT INTO trips(uid, originid, originaddress,  destinationid, destinationaddress, departDate, arriveDate) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *', [req.body.uid, req.body.originid, req.body.originaddress, req.body.destinationid, req.body.destinationaddress, req.body.departDate, req.body.arriveDate],
     function (err, result) {
       if (err) {
         console.error(err);
         res.status(500).send("Server error: " + err);
         client.release();
-      }
-      // } if (req.body.uid == null || req.body.originId == null || req.body.destinationId == null || req.body.departDate == null || req.body.arriveDate == null) {
-      //   res.status(400).send("Conflict creating destination: All fields are required")
-      //   client.release();
-      // }
-      else {
+        // } if (req.body.uid == null || req.body.originId == null || req.body.destinationId == null || req.body.departDate == null || req.body.arriveDate == null) {
+        //   res.status(400).send("Conflict creating destination: All fields are required")
+        //   client.release();
+      } else {
         res.status(201).json(result.rows[0]);
         client.release();
       }

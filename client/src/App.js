@@ -38,7 +38,8 @@ class App extends Component {
       user: {},
       error: null,
       isLoaded: false,
-      userdata: []
+      userdata: [],
+      usertrips: []
     };
   }
 
@@ -87,36 +88,36 @@ class App extends Component {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //~~~~~~~~~~~~~~ Ueer Trip Data ~~~~~~~~~~~~~~~~~~~~~~~~
-  componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.user)
-    if (this.state.user) {
-      if (!prevState.isLoaded) {
-        // console.log(this.state.user.email)
-        let userID = this.state.user.email
-        console.log(userID)
-        fetch(`/udata/${userID}`)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              // console.log(userID)
-              console.log(result)
-              console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
-              this.setState({
-                isLoaded: true,
-                userdata: result
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error
-              });
-            }
-          )
-      }
-    }
-  }
+  //~~~~~~~~~~~~~~ User Trip Data ~~~~~~~~~~~~~~~~~~~~~~~~
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(this.state.user)
+  //   if (this.state.user) {
+  //     if (!prevState.isLoaded) {
+  //       // console.log(this.state.user.email)
+  //       let userID = this.state.user.email
+  //       console.log(userID)
+  //       fetch(`/udata/${userID}`)
+  //         .then(res => res.json())
+  //         .then(
+  //           (result) => {
+  //             // console.log(userID)
+  //             console.log(result)
+  //             console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
+  //             this.setState({
+  //               isLoaded: true,
+  //               userdata: result
+  //             });
+  //           },
+  //           (error) => {
+  //             this.setState({
+  //               isLoaded: true,
+  //               error
+  //             });
+  //           }
+  //         )
+  //     }
+  //   }
+  // }
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   // ~~~~~~~~~~~~~~ 'Get' User data from DB ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -7,6 +7,17 @@ import NotificationsButton from '../components/NotificationsButton';
 
 class Notifications extends Component {
   render() {
+
+    // const useraddresses = this.state.newuserdata.map((useraddress) =>
+    //   <Dropdown.Item
+    //     onClick={() => { this.handleClick(useraddress) }}
+    //     key={useraddress.id}
+    //     onChange={this.handleOrigin}>
+    //     {useraddress.address}
+    //   </Dropdown.Item>
+    // )
+
+
     return (
       <div className='authenitcatedPageBG'>
         <NavBar userdata={this.props.userdata} />

@@ -121,7 +121,7 @@ html, body, .App, .Home{
 }
 .navgreet{
   font-size: 1.5rem;
-  color: #285128;
+  color: white;
 }
 .nonAuthNav {
   background-color: rgba(0, 0, 0, 0.50);

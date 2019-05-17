@@ -7,11 +7,12 @@ class RouteTable extends React.Component {
     super(props)
     this.state = {
       mapsResult: props.mapsResult,
-      submitResponse: '',
       show: false,
       uid: '',
-      originId: '',
-      destinationId: '',
+      originid: '',
+      originaddress: '',
+      destinationid: '',
+      destinationaddress: '',
       transitMethod: '',
       price: '',
       duration: '',
@@ -26,8 +27,10 @@ class RouteTable extends React.Component {
       const request = this.props.mapsResult.request;
       this.setState({
         uid: this.props.userData[0].uid,
-        originId: request.origin.placeId,
-        destinationId: request.destination.placeId,
+        originid: request.origin.placeId,
+        originaddress: route.legs[0].start_address,
+        destinationid: request.destination.placeId,
+        destinationaddress: route.legs[0].end_address,
         transitMethod: request.travelMode,
         price: route.fare ? route.fare.text : "N/A",
         duration: route.legs[0].duration.text,
@@ -39,11 +42,13 @@ class RouteTable extends React.Component {
     }
   }
 
-  handleNewTrip = (uid, originId, destinationId, departDate, arriveDate) => {
+  handleNewTrip = (uid, originid, originaddress, destinationid, destinationaddress, departDate, arriveDate) => {
     const data = {
       uid,
-      originId,
-      destinationId,
+      originid,
+      originaddress,
+      destinationid,
+      destinationaddress,
       departDate,
       arriveDate
     }
@@ -61,21 +66,22 @@ class RouteTable extends React.Component {
     e.preventDefault()
     this.handleNewTrip(
       this.state.uid,
-      this.state.originId,
-      this.state.destinationId,
+      this.state.originid,
+      this.state.originaddress,
+      this.state.destinationid,
+      this.state.destinationaddress,
       this.state.departDate,
       this.state.arriveDate
     );
     this.setState({
-      // submitResponse: 'Trip Saved!',
       show: true
     })
   }
   handleHide = (e) => {
     this.setState({
       show: false,
-      originId: '',
-      destinationId: '',
+      originid: '',
+      destinationid: '',
       transitMethod: '',
       price: '',
       duration: '',
@@ -112,7 +118,6 @@ class RouteTable extends React.Component {
             </tr>
           </tbody>
         </Table>
-        {/* <h4 style={{ color: 'green' }}> {this.state.submitResponse}</h4> */}
         <Alert show={this.state.show} variant="success">
           <Alert.Heading>Your trip was saved!</Alert.Heading>
           <div className="d-flex justify-content-end">
