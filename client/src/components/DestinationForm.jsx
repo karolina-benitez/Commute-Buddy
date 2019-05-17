@@ -223,6 +223,7 @@ class DestinationForm extends Component {
 
         <RouteTable
           mapsResult={this.state.mapsResults}
+          userData={this.props.userdata}
         />
         <div>
           <div >

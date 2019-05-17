@@ -40,7 +40,9 @@ app.get('/udata/:email', async (req, res) => {
 
   const client = await pool.connect();
 
-  client.query('SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, destinations.address, destinations.arrivedate, destinations.arrivetime, destinations.id FROM udata INNER JOIN destinations ON udata.uid = destinations.uid WHERE email=$1;', [req.params.email], function (err, result) {
+  // SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber, trips.origin, trips.destination, destinations.arrivedate FROM udata INNER JOIN trips ON udata.uid = trips.uid WHERE email=$1;'
+
+  client.query('SELECT udata.uid, udata.firstname, udata.lastname, udata.email, udata.phonenumber FROM udata WHERE email=$1;', [req.params.email], function (err, result) {
     if (err) {
       console.error(err);
       res.status(500).send("Server error");
@@ -102,14 +104,14 @@ app.put("/udata/:email", async (req, res) => {
   req.body.transitalert = emptyToNull(req.body.transitalert);
 
   client.query('UPDATE udata SET firstname=COALESCE($1,firstname), lastname=COALESCE($2,lastname), phonenumber=COALESCE($3,phonenumber),trafficalert=COALESCE($4,trafficalert), weatheralert=COALESCE($5,weatheralert), eventalert=COALESCE($6,eventalert), transitalert=COALESCE($7,transitalert) WHERE email=($8) RETURNING *',
-    [req.body.firstname, 
-      req.body.lastname, 
-      req.body.phonenumber, 
-      req.body.trafficalert,
-      req.body.weatheralert,
-      req.body.eventalert,
-      req.body.transitalert,
-      req.params.email],
+    [req.body.firstname,
+    req.body.lastname,
+    req.body.phonenumber,
+    req.body.trafficalert,
+    req.body.weatheralert,
+    req.body.eventalert,
+    req.body.transitalert,
+    req.params.email],
     function (err, result) {
       if (err) {
         console.error(err);
@@ -127,7 +129,7 @@ app.put("/udata/:email", async (req, res) => {
 
 //   const client = await pool.connect();
 
-  
+
 
 //   client.query('UPDATE udata SET trafficalert=COALESCE($1,trafficalert), weatheralert=COALESCE($2,weatheralert), eventalert=COALESCE($3,eventalert), transitalert=COALESCE($4,transitalert) WHERE email=($5) RETURNING *',
 //     [req.body.trafficalert,
@@ -147,31 +149,31 @@ app.put("/udata/:email", async (req, res) => {
 //     });
 // });
 
-//----------- Get User Destination -----------
-app.get('/destinations/:email', async (req, res) => {
+//----------- Get Trips ----------- //TODO: create trips route
+// app.get('/trips/:email', async (req, res) => {
 
-  const client = await pool.connect();
+//   const client = await pool.connect();
 
-  client.query('SELECT destinations.uid, destinations.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
-    [req.params.email], function (err, result) {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Server error");
-        client.release();
-      } if (result.rowCount === 0) {
-        res.status(404).send("Destinations not found");
-        client.release;
-      }
-      else {
-        client.release();
-        res.status(200).json(result.rows[0]);
-      }
-    });
-});
+//   client.query('SELECT destinations.uid, destinations.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
+//     [req.params.email], function (err, result) {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).send("Server error");
+//         client.release();
+//       } if (result.rowCount === 0) {
+//         res.status(404).send("Destinations not found");
+//         client.release;
+//       }
+//       else {
+//         client.release();
+//         res.status(200).json(result.rows[0]);
+//       }
+//     });
+// });
 
-//----------- Add New Destination -----------
+//----------- Add New Trip ----------- TODO: create trips route
 
-app.post('/destinations', async (req, res) => {
+app.post('/newTrip', async (req, res) => {
 
   const client = await pool.connect();
 
@@ -197,36 +199,33 @@ app.post('/destinations', async (req, res) => {
     });
 });
 
-//----------- User start/destination/arrive by -----------
+//----------- User start/destination/arrive by ----------- TODO: create trips route
 
-app.post('/setdestination', async (req, res) => {
+// app.post('/setdestination', async (req, res) => {
 
-  const client = await pool.connect();
+//   const client = await pool.connect();
 
-  req.body.uid = emptyToNull(req.body.uid);
-  req.body.address = emptyToNull(req.body.address);
-  req.body.arrivedate = emptyToNull(req.body.arrivedate);
-  req.body.arrivetime = emptyToNull(req.body.arrivetime);
+//   req.body.uid = emptyToNull(req.body.uid);
+//   req.body.address = emptyToNull(req.body.address);
+//   req.body.arrivedate = emptyToNull(req.body.arrivedate);
+//   req.body.arrivetime = emptyToNull(req.body.arrivetime);
 
-  client.query('INSERT INTO destinations(uid, address, arrivedate, arrivetime) VALUES($1, $2, $3, $4) RETURNING *', [req.body.uid, req.body.address, req.body.arrivedate, req.body.arrivetime],
-    function (err, result) {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Server error: " + err);
-        client.release();
-      } if (req.body.uid == null || req.body.address == null || req.body.arrivedate == null || req.body.arrivetime == null) {
-        res.status(400).send("Conflict creating route: All fields are required")
-        client.release();
-      }
-      else {
-        res.status(201).json(result.rows[0]);
-        client.release();
-      }
-    });
-});
-
-//----------- User Select Route -----------
-// Do i need this??
+//   client.query('INSERT INTO destinations(uid, address, arrivedate, arrivetime) VALUES($1, $2, $3, $4) RETURNING *', [req.body.uid, req.body.address, req.body.arrivedate, req.body.arrivetime],
+//     function (err, result) {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).send("Server error: " + err);
+//         client.release();
+//       } if (req.body.uid == null || req.body.address == null || req.body.arrivedate == null || req.body.arrivetime == null) {
+//         res.status(400).send("Conflict creating route: All fields are required")
+//         client.release();
+//       }
+//       else {
+//         res.status(201).json(result.rows[0]);
+//         client.release();
+//       }
+//     });
+// });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
