@@ -149,27 +149,26 @@ app.put("/udata/:email", async (req, res) => {
 //     });
 // });
 
-//----------- Get Trips ----------- //TODO: create trips route
-// app.get('/trips/:email', async (req, res) => {
+// ----------- Get Trips ----------- //TODO: create trips route
+app.get('/trips/:email', async (req, res) => {
+  const client = await pool.connect();
 
-//   const client = await pool.connect();
-
-//   client.query('SELECT destinations.uid, destinations.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
-//     [req.params.email], function (err, result) {
-//       if (err) {
-//         console.error(err);
-//         res.status(500).send("Server error");
-//         client.release();
-//       } if (result.rowCount === 0) {
-//         res.status(404).send("Destinations not found");
-//         client.release;
-//       }
-//       else {
-//         client.release();
-//         res.status(200).json(result.rows[0]);
-//       }
-//     });
-// });
+  client.query('SELECT destinations.uid, destinations.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
+    [req.params.email], function (err, result) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+        client.release();
+      } if (result.rowCount === 0) {
+        res.status(404).send("Destinations not found");
+        client.release;
+      }
+      else {
+        client.release();
+        res.status(200).json(result.rows[0]);
+      }
+    });
+});
 
 //----------- Add New Trip ----------- TODO: create trips route
 
@@ -178,20 +177,22 @@ app.post('/newTrip', async (req, res) => {
   const client = await pool.connect();
 
   req.body.uid = emptyToNull(req.body.uid);
-  req.body.address = emptyToNull(req.body.address);
-  req.body.arrivedate = emptyToNull(req.body.arrivedate);
-  req.body.arrivetime = emptyToNull(req.body.arrivetime);
+  req.body.originId = emptyToNull(req.body.originId);
+  req.body.destinationId = emptyToNull(req.body.destinationId);
+  req.body.departDate = emptyToNull(req.body.departDate);
+  req.body.arriveDate = emptyToNull(req.body.arriveDate);
 
-  client.query('INSERT INTO destinations(uid, address, arrivedate, arrivetime) VALUES($1, $2, $3, $4) RETURNING *', [req.body.uid, req.body.address, req.body.arrivedate, req.body.arrivetime],
+  client.query('INSERT INTO trips(uid, originId, destinationId, departDate, arriveDate) VALUES($1, $2, $3, $4, $5) RETURNING *', [req.body.uid, req.body.originId, req.body.destinationId, req.body.departDate, req.body.arriveDate],
     function (err, result) {
       if (err) {
         console.error(err);
         res.status(500).send("Server error: " + err);
         client.release();
-      } if (req.body.uid == null || req.body.address == null) {
-        res.status(400).send("Conflict creating destination: All fields are required")
-        client.release();
       }
+      // } if (req.body.uid == null || req.body.originId == null || req.body.destinationId == null || req.body.departDate == null || req.body.arriveDate == null) {
+      //   res.status(400).send("Conflict creating destination: All fields are required")
+      //   client.release();
+      // }
       else {
         res.status(201).json(result.rows[0]);
         client.release();
