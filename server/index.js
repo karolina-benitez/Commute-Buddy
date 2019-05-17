@@ -153,7 +153,7 @@ app.put("/udata/:email", async (req, res) => {
 app.get('/trips/:email', async (req, res) => {
   const client = await pool.connect();
 
-  client.query('SELECT trips.uid, trips.address, destinations.arrivedate, destinations.arrivetime FROM destinations INNER JOIN udata ON udata.uid = destinations.uid WHERE email=$1;',
+  client.query('SELECT trips.uid, trips.originaddress, trips.destinationaddress, trips.departdate, trips.arrivedate FROM trips INNER JOIN udata ON udata.uid = trips.uid WHERE email=$1;',
     [req.params.email], function (err, result) {
       if (err) {
         console.error(err);
@@ -165,7 +165,7 @@ app.get('/trips/:email', async (req, res) => {
       }
       else {
         client.release();
-        res.status(200).json(result.rows[0]);
+        res.status(200).json(result.rows);
       }
     });
 });
