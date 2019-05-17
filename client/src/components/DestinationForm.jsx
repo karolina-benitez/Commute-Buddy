@@ -97,7 +97,7 @@ class DestinationForm extends Component {
         destination: { 'placeId': this.destinationPlaceId },
         travelMode: this.travelMode,
         transitOptions: {
-          arrivalTime: this.arrival_date
+          arrivalTime: this.state.arrival_date
         }
       },
       (response, status) => {
@@ -114,10 +114,10 @@ class DestinationForm extends Component {
       });
   };
   handleChange = (date) => {
-    // this.setState({
-    //   arrivedate: date
-    // });
-    this.arrival_date = date;
+    this.setState({
+      arrivedate: date
+    });
+    // this.arrival_date = date;
     this.route();
   }
 

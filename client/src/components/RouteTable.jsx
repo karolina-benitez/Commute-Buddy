@@ -7,7 +7,7 @@ class RouteTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      mapsResult: this.props.response,
+      mapsResult: props.mapsResult,
       transitMethod: '',
       price: '',
       duration: '',
@@ -16,27 +16,35 @@ class RouteTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('it changed!')
 
-    if (prevProps.mapResults !== this.state.mapResults) {
+    if (this.props.mapsResult !== prevProps.mapsResult) {
+      const route = this.props.mapsResult.routes[0];
       this.setState({
-        transitMethod: this.props.mapsResult.request.transitOptions.travelMode,
-        price: this.state.mapsResult.routes[0].fare.text,
-        duration: this.state.mapsResultroutes[0].legs[0].duration.text,
-        arriveDate: this.state.mapsResult.request.transitOptions.arrivalTime
+        transitMethod: this.props.mapsResult.request.travelMode,
+        price: route.fare ? route.fare.text : "N/A",
+        duration: this.props.mapsResult.routes[0].legs[0].duration.text,
+        arriveDate: this.props.mapsResult.request.transitOptions.arrivalTime,
+        mapsResult: this.props.mapsResult
       });
+      console.log(this.props.mapsResult.request.travelMode)
     }
   }
+  // componentDidMount() {
+  //   this.setState({
+  //     mapsResult: this.
+  //   })
+  // }
 
   render() {
     console.log(this.state.mapsResult)
-    console.log(this.props.mapResult)
-    console.log(this.props.mapResult2)
+    console.log(this.props.mapsResult)
+    console.log(this.state.mapsResult)
     return (
       <div className='routeTable'>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
-              <th></th>
               <th>Transit Method</th>
               <th>Price</th>
               <th>Duration</th>
@@ -45,7 +53,7 @@ class RouteTable extends React.Component {
           </thead>
           <tbody>
             <tr>
-              <td>{this.state.travelMode}</td>
+              <td>{this.state.transitMethod}</td>
               <td>{this.state.price}</td>
               <td>{this.state.duration}</td>
               <td>{this.state.arriveDate}</td>
