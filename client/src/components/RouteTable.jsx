@@ -8,6 +8,7 @@ class RouteTable extends React.Component {
     super(props)
     this.state = {
       mapsResult: props.mapsResult,
+      submitResponse: '',
       uid: '',
       originId: '',
       destinationId: '',
@@ -65,6 +66,9 @@ class RouteTable extends React.Component {
       this.state.departDate,
       this.state.arriveDate
     );
+    this.setState({
+      submitResponse: 'Trip Saved!'
+    })
   }
 
   render() {
@@ -94,8 +98,9 @@ class RouteTable extends React.Component {
             </tr>
           </tbody>
         </Table>
+        <h4 style={{ color: 'green' }}> {this.state.submitResponse}</h4>
         <Button variant="light"
-          onClick={() => { this.handleSelectButton() }} className='darkButton'> Select Trip </Button>
+          onClick={this.submitHandler} className='darkButton'> Select Trip </Button>
       </div>
     )
   }
