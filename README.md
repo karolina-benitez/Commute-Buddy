@@ -60,9 +60,10 @@ CREATE TABLE udata (
 CREATE TABLE trips (
   id SERIAL,
   uid VARCHAR, 
-  origin VARCHAR, 
-  destination VARCHAR, 
-  arrivedate DATE
+  originid VARCHAR, 
+  destinationid VARCHAR, 
+  arrivedate VARCHAR,
+  departdate VARCHAR
 );
 ```
 
