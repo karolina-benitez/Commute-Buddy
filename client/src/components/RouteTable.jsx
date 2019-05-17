@@ -1,6 +1,5 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
+import { Button, Table, Alert } from 'react-bootstrap'
 
 
 class RouteTable extends React.Component {
@@ -9,6 +8,7 @@ class RouteTable extends React.Component {
     this.state = {
       mapsResult: props.mapsResult,
       submitResponse: '',
+      show: false,
       uid: '',
       originId: '',
       destinationId: '',
@@ -67,9 +67,23 @@ class RouteTable extends React.Component {
       this.state.arriveDate
     );
     this.setState({
-      submitResponse: 'Trip Saved!'
+      // submitResponse: 'Trip Saved!',
+      show: true
     })
   }
+  handleHide = (e) => {
+    this.setState({
+      show: false,
+      originId: '',
+      destinationId: '',
+      transitMethod: '',
+      price: '',
+      duration: '',
+      departDate: '',
+      arriveDate: '',
+    });
+  }
+
 
   render() {
     console.log(this.state.originId)
@@ -98,7 +112,15 @@ class RouteTable extends React.Component {
             </tr>
           </tbody>
         </Table>
-        <h4 style={{ color: 'green' }}> {this.state.submitResponse}</h4>
+        {/* <h4 style={{ color: 'green' }}> {this.state.submitResponse}</h4> */}
+        <Alert show={this.state.show} variant="success">
+          <Alert.Heading>Your trip was saved!</Alert.Heading>
+          <div className="d-flex justify-content-end">
+            <Button onClick={this.handleHide} variant="outline-success">
+              Done
+            </Button>
+          </div>
+        </Alert>
         <Button variant="light"
           onClick={this.submitHandler} className='darkButton'> Select Trip </Button>
       </div>
