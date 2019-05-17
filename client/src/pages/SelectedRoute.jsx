@@ -8,40 +8,34 @@ import NotificationsButton from '../components/NotificationsButton';
 class Notifications extends Component {
   render() {
 
-    // const useraddresses = this.state.newuserdata.map((useraddress) =>
-    //   <Dropdown.Item
-    //     onClick={() => { this.handleClick(useraddress) }}
-    //     key={useraddress.id}
-    //     onChange={this.handleOrigin}>
-    //     {useraddress.address}
-    //   </Dropdown.Item>
-    // )
-
-
+    const usertrips = this.props.usertrips.map((usertrip, i) =>
+      <tbody>
+        <tr key={i}>
+          <td>{usertrip.originaddress}</td>
+          <td>{usertrip.destinationaddress}</td>
+          <td>{usertrip.departdate}</td>
+          <td>{usertrip.arrivedate}</td>
+        </tr>
+      </tbody>
+    )
+    console.log(this.props.usertrips)
     return (
       <div className='authenitcatedPageBG'>
         <NavBar userdata={this.props.userdata} />
         <div className='selectedRouteContent'>
           <h3 style={{ padding: '2%' }}>We'll Notify you of any changes</h3>
-          <h5 style={{ padding: '2%' }}>Arrive by: April 30, 2019 @ 8:25 AM</h5>
+          <h5 style={{ padding: '2%' }}>Yout trips:</h5>
           <div className='routeTable' >
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
-                  <th>Transit Option</th>
-                  <th>Price</th>
-                  <th>Duration</th>
-                  <th>Arrive By</th>
+                  <th>Origin</th>
+                  <th>Destination</th>
+                  <th>Departure time</th>
+                  <th>Arrival time</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Ferry</td>
-                  <td>$7.00</td>
-                  <td>25 mins</td>
-                  <td>8:25 AM</td>
-                </tr>
-              </tbody>
+              {usertrips}
             </Table>
           </div>
           <NotificationsButton style={{ padding: '4%' }} />

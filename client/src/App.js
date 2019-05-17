@@ -84,43 +84,10 @@ class App extends Component {
         });
         this.setState({ events });//TODO: update variables to user
       })
-
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //~~~~~~~~~~~~~~ User Trip Data ~~~~~~~~~~~~~~~~~~~~~~~~
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log(this.state.user)
-  //   if (this.state.user) {
-  //     if (!prevState.isLoaded) {
-  //       // console.log(this.state.user.email)
-  //       let userID = this.state.user.email
-  //       console.log(userID)
-  //       fetch(`/udata/${userID}`)
-  //         .then(res => res.json())
-  //         .then(
-  //           (result) => {
-  //             // console.log(userID)
-  //             console.log(result)
-  //             console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
-  //             this.setState({
-  //               isLoaded: true,
-  //               userdata: result
-  //             });
-  //           },
-  //           (error) => {
-  //             this.setState({
-  //               isLoaded: true,
-  //               error
-  //             });
-  //           }
-  //         )
-  //     }
-  //   }
-  // }
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  // ~~~~~~~~~~~~~~ 'Get' User data from DB ~~~~~~~~~~~~~~~~~~~~~~~~
   componentDidUpdate(prevProps, prevState) {
     console.log(this.state.user)
     if (this.state.user) {
@@ -128,6 +95,7 @@ class App extends Component {
         // console.log(this.state.user.email)
         let userID = this.state.user.email
         console.log(userID)
+        // ~~~~~~~~~~~~~~ User data ~~~~~~~~~~~~~~~~~~~~~~~~
         fetch(`/udata/${userID}`)
           .then(res => res.json())
           .then(
@@ -147,6 +115,27 @@ class App extends Component {
               });
             }
           )
+        //~~~~~~~~~~~~~~ Trip Data ~~~~~~~~~~~~~~~~~~~~~~~~
+        fetch(`/trips/${userID}`)
+          .then(res => res.json())
+          .then(
+            (result2) => {
+              // console.log(userID)
+              console.log(result2)
+              console.log('!!!!!!!!💃🏻 it worked 💃🏻!!!!!!!!!!')
+              this.setState({
+                isLoaded: true,
+                usertrips: result2
+              });
+            },
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
+            }
+          )
+
       }
     }
   }
@@ -176,6 +165,7 @@ class App extends Component {
               <PrivateRoute path='/main'
                 component={MainPage}
                 isAuth={this.state.user}
+                usertrips={this.state.usertrips}
                 userdata={this.state.userdata} />
               <PrivateRoute path='/usersettings'
                 component={UserSettings}
@@ -188,6 +178,7 @@ class App extends Component {
               <PrivateRoute path='/selection'
                 component={SelectedRoute}
                 isAuth={this.state.user}
+                usertrips={this.state.usertrips}
                 userdata={this.state.userdata} />
               <PrivateRoute path='/navbar'
                 component={NavBar}
