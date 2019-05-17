@@ -28,7 +28,7 @@ class NavBar extends React.Component {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/main" className='hamburgerLink navLink'>Home</Nav.Link>
-              <Nav.Link href="/selection" className='hamburgerLink navLink'>Routes</Nav.Link>
+              <Nav.Link href="/selection" className='hamburgerLink navLink'>Trips</Nav.Link>
               <Nav.Link href="/usersettings" className='hamburgerLink navLink'>Settings</Nav.Link>
               <Nav.Link href="/" onClick={this.logout} className='hamburgerLink navLink'>Sign Out</Nav.Link>
             </Nav>
